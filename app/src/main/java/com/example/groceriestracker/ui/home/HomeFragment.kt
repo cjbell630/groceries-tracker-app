@@ -1,6 +1,6 @@
+// HomeFragment.kt
 package com.example.groceriestracker.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.groceriestracker.database.Item
 import com.example.groceriestracker.databinding.FragmentHomeBinding
-import com.example.groceriestracker.ui.ItemDetails
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -37,14 +37,12 @@ class HomeFragment : Fragment() {
         }
 
         // Applying OnClickListener to our Adapter
-        adapter.setOnClickListener(object :
-            ItemAdapter.OnClickListener {
+        adapter.setOnClickListener(object : ItemAdapter.OnClickListener {
             override fun onClick(position: Int, model: Item) {
-                val intent = Intent(this@HomeFragment.context, ItemDetails::class.java)
-                // Passing the data to the
-                // EmployeeDetails Activity
-                intent.putExtra(NEXT_SCREEN, model)
-                startActivity(intent)
+                val action = HomeFragmentDirections.actionHomeFragmentToItemDetailsFragment(model)
+                findNavController().navigate(action)
+                // make the back button work
+                // by adding the following code to MainActivity.kt
             }
         })
 
@@ -58,10 +56,6 @@ class HomeFragment : Fragment() {
         }
 
         return root
-    }
-
-    companion object {
-        const val NEXT_SCREEN="details_screen"
     }
 
     override fun onDestroyView() {
