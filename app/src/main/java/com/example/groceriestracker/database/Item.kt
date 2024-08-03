@@ -11,5 +11,5 @@ data class Item(
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "amount") val amount: Double?,
     @ColumnInfo(name = "unit") val unit: String?,
-    @ColumnInfo(name = "status_events") @TypeConverters(ItemStatusTypeConverter::class) val events: List<ItemStatus>
-)
+    @ColumnInfo(name = "status_events") @TypeConverters(ItemStatusTypeConverter::class) val statusEvents: List<ItemStatus>
+):java.io.Serializable

@@ -1,5 +1,6 @@
 package com.example.groceriestracker.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.groceriestracker.database.Item
 import com.example.groceriestracker.databinding.FragmentHomeBinding
+import com.example.groceriestracker.ui.ItemDetails
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -34,9 +36,21 @@ class HomeFragment : Fragment() {
             items?.let { adapter.submitList(it) }
         }
 
+        // Applying OnClickListener to our Adapter
+        adapter.setOnClickListener(object :
+            ItemAdapter.OnClickListener {
+            override fun onClick(position: Int, model: Item) {
+                val intent = Intent(this@HomeFragment.context, ItemDetails::class.java)
+                // Passing the data to the
+                // EmployeeDetails Activity
+                intent.putExtra(NEXT_SCREEN, model)
+                startActivity(intent)
+            }
+        })
+
         binding.buttonAddItem.setOnClickListener {
             try {
-                val newItem = Item(uid = 0, name = "Test Item", amount = 1.0, unit = "pcs")
+                val newItem = Item(uid = 0, name = "Test Item", amount = 1.0, unit = "pcs", statusEvents = emptyList())
                 homeViewModel.insertItem(newItem)
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Error inserting item", e)
@@ -44,6 +58,10 @@ class HomeFragment : Fragment() {
         }
 
         return root
+    }
+
+    companion object {
+        const val NEXT_SCREEN="details_screen"
     }
 
     override fun onDestroyView() {
