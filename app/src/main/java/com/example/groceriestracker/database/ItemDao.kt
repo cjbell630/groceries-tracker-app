@@ -1,10 +1,7 @@
 package com.example.groceriestracker.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Delete
+import androidx.room.*
 
 @Dao
 interface ItemDao {
@@ -22,4 +19,7 @@ interface ItemDao {
 
     @Delete
     fun delete(user: Item)
+
+    @Update
+    fun update(vararg items: Item)
 }
