@@ -1,15 +1,26 @@
 package com.example.groceriestracker.repository
 
 import com.example.groceriestracker.database.Item
+import com.example.groceriestracker.math.estimateTimeRemaining
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit){
     private val databaseEntryUID = item.uid
-    private var name = item.name
-    private var amount = item.amount
-    private var unit = item.unit
+    var name:String = item.name ?: ""
+    var remainingAmount:Double? = item.amount
+        set(value) {
+            // TODO write
+            // TODO see if called on incrementation
+            field = value
+        }
+
+    var unit:String = item.unit ?: name
+    // TODO kinda cool but is this worth   get() = if(remainingAmount == 1.0) field else "${field}s"
     private var statusEvents = item.statusEvents
+
+    var estimatedTimeRemaining: Long = calculateTimeRemaining()
+        private set // not modifiable from outside the class
 
     init {
     }
@@ -18,17 +29,12 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit){
      * Create a new item containing the current state of this object and save it to the database
      */
     suspend fun saveToDatabase() {
-        val newItem = Item(databaseEntryUID, name, amount, unit, statusEvents)
+        val newItem = Item(databaseEntryUID, name, remainingAmount, unit, statusEvents)
         onSave(newItem)
         // TODO refresh?
     }
 
-    fun getRemainingTime(): Int {
-        return 0
+    private fun calculateTimeRemaining(): Long {
+        return estimateTimeRemaining(statusEvents)
     }
-
-    fun getRemainingAmount(): Double? {
-        return amount
-    }
-
 }

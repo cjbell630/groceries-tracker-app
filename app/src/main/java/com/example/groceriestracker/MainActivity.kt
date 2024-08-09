@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Home
@@ -20,9 +22,18 @@ import com.example.groceriestracker.ui.theme.GroceriesTrackerTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.groceriestracker.database.AppDatabase
+import com.example.groceriestracker.repository.ItemRepository
+import com.example.groceriestracker.repository.ProcessedItem
+import com.example.groceriestracker.ui.ItemCard
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -88,6 +99,12 @@ fun GroceriesTrackerApp(
         }*/
         var presses by remember { mutableIntStateOf(0) }
 
+
+        val itemDao = AppDatabase.getDatabase(LocalContext.current).itemDao()
+        val repository = ItemRepository(itemDao)
+        val allItems by repository.processedItems.observeAsState(emptyList())
+
+
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
@@ -133,17 +150,12 @@ fun GroceriesTrackerApp(
                     .padding(innerPadding),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Text(
-                    modifier = Modifier.padding(8.dp),
-                    text =
-                    """
-                    This is an example of a scaffold. It uses the Scaffold composable's parameters to create a screen with a simple top app bar, bottom app bar, and floating action button.
+                LazyColumn {
+                    items(allItems) { processedItem: ProcessedItem ->
+                        ItemCard(processedItem)
+                    }
+                }
 
-                    It also contains some basic inner content, such as this text.
-
-                    You have pressed the floating action button $presses times.
-                """.trimIndent(),
-                )
             }
         }
     }
