@@ -3,11 +3,6 @@ package com.example.groceriestracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Home
@@ -15,7 +10,6 @@ import androidx.compose.material.icons.rounded.Receipt
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.compose.rememberNavController
-import com.example.groceriestracker.ui.AppDrawer
 import com.example.groceriestracker.ui.TopLevelDestinations
 import com.example.groceriestracker.ui.TopNavHost
 import com.example.groceriestracker.ui.theme.GroceriesTrackerTheme
@@ -23,17 +17,11 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
 import com.example.groceriestracker.repository.ItemRepository
-import com.example.groceriestracker.repository.ProcessedItem
-import com.example.groceriestracker.ui.ItemCard
+import com.example.groceriestracker.ui.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -97,12 +85,13 @@ fun GroceriesTrackerApp(
         ) {
             TopNavHost(navController = navController)
         }*/
-        var presses by remember { mutableIntStateOf(0) }
+        // var presses by remember { mutableIntStateOf(0) }
 
 
         val itemDao = AppDatabase.getDatabase(LocalContext.current).itemDao()
         val repository = ItemRepository(itemDao)
         val allItems by repository.processedItems.observeAsState(emptyList())
+
 
 
         Scaffold(
@@ -118,10 +107,10 @@ fun GroceriesTrackerApp(
                             Icon(Icons.Rounded.Receipt, contentDescription = "Open shopping list")
                         }
                     }
-                )},
+                )
+            },
             bottomBar = {
-                NavigationBar(
-                ){
+                NavigationBar() {
                     NavigationBarItem(
                         icon = {
                             Icon(
@@ -130,7 +119,7 @@ fun GroceriesTrackerApp(
 
                             )
                         },
-                        label = {Text("Home")},
+                        label = { Text("Home") },
                         selected = currentRoute == TopLevelDestinations.HOME_ROUTE,
                         onClick = {
                             navController.navigate(TopLevelDestinations.HOME_ROUTE)
@@ -139,27 +128,17 @@ fun GroceriesTrackerApp(
                 }
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = { presses++ }) {
+                FloatingActionButton(onClick = { /*TODO*/ }) {
                     Icon(Icons.Rounded.Add, contentDescription = "Add")
                 }
             }
-        ){
-                innerPadding ->
-            Column(
-                modifier = Modifier
-                    .padding(innerPadding),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                LazyColumn {
-                    items(allItems) { processedItem: ProcessedItem ->
-                        ItemCard(processedItem)
-                    }
-                }
-
-            }
+        ) { innerPadding ->
+            HomeScreen(innerPadding, allItems)
         }
     }
 }
+
+
 /*
 class MainActivity : AppCompatActivity() {
 

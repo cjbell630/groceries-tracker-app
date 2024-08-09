@@ -16,7 +16,7 @@ object TopLevelDestinations {
 fun TopNavHost(navController: NavHostController = rememberNavController()) {
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         composable(TopLevelDestinations.HOME_ROUTE) {
-            HomeScreen()
+            //HomeScreen()
         }
     }
 }
