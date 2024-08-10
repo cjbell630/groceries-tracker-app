@@ -15,10 +15,10 @@ interface ItemDao {
     fun findByName(nameQuery: String): Item
 
     @Insert
-    suspend fun insertAll(vararg users: Item)
+    suspend fun insertAll(vararg items: Item)
 
     @Delete
-    fun delete(user: Item)
+    fun delete(item: Item)
 
     @Update
     fun update(vararg items: Item)

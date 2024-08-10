@@ -14,6 +14,7 @@ data class Item(
     @ColumnInfo(name = "amount") val amount: Double?,
     @ColumnInfo(name = "unit") val unit: String?,
     @ColumnInfo(name = "icon_id") val iconId: String?,
+    // TODO add "needs update" boolean field
     @ColumnInfo(name = "status_events") @TypeConverters(ItemStatusTypeConverter::class) val statusEvents: List<ItemStatus>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
