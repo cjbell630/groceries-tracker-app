@@ -9,7 +9,7 @@ import androidx.room.TypeConverters
 
 @Entity
 data class Item(
-    @PrimaryKey(autoGenerate = true) val uid: Int=0,
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "amount") val amount: Double?,
     @ColumnInfo(name = "unit") val unit: String?,

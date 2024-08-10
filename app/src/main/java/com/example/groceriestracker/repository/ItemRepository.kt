@@ -9,7 +9,8 @@ import kotlinx.coroutines.withContext
 
 class ItemRepository(private val itemDao: ItemDao) {
     val allItems: LiveData<List<Item>> = itemDao.getAll()
-    val processedItems: LiveData<List<ProcessedItem>> = allItems.map { items -> items.map { ProcessedItem(it, this::update) } }
+    val processedItems: LiveData<List<ProcessedItem>> =
+        allItems.map { items -> items.map { ProcessedItem(it, this::update) } }
 
     suspend fun update(item: Item) {
         withContext(Dispatchers.IO) {

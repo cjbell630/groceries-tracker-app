@@ -19,7 +19,7 @@ val THINGY_SP = 8.sp
 @Composable
 fun ItemCard(item: ProcessedItem) {
     ElevatedCard(
-        Modifier.padding(horizontal=2 * THINGY, vertical=1*THINGY)
+        Modifier.padding(horizontal = 2 * THINGY, vertical = 1 * THINGY)
     ) {
         Row(
             modifier = Modifier
@@ -31,7 +31,7 @@ fun ItemCard(item: ProcessedItem) {
         ) { // row contains row[icon, name], then row[circle, column[amount, unit]
             Row(
                 horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically // Centers items vertically
+                verticalAlignment = Alignment.CenterVertically // Centers items vertically
             ) { // row contains
                 item.icon?.Display(
                     modifier = Modifier
@@ -45,16 +45,16 @@ fun ItemCard(item: ProcessedItem) {
             }
             Row(
                 horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically // Centers items vertically
-            ){
+                verticalAlignment = Alignment.CenterVertically // Centers items vertically
+            ) {
 
                 CircularProgressIndicator(
-                    progress={
+                    progress = {
                         0.8f //TODO
                     },
                     color = Color.Red,
                     trackColor = Color.Green,
-                    modifier=Modifier.padding(end = 2 * THINGY)
+                    modifier = Modifier.padding(end = 2 * THINGY)
                 )
                 Column(
                 ) {

@@ -7,26 +7,27 @@ import com.example.groceriestracker.math.estimateTimeRemaining
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit){
+class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
     private val databaseEntryUID = item.uid
-    var name:String = item.name ?: ""
-    var remainingAmount:Double? = item.amount
+    var name: String = item.name ?: ""
+    var remainingAmount: Double? = item.amount
         set(value) {
             // TODO write
             // TODO see if called on incrementation
             field = value
         }
 
-    var unit:String = item.unit ?: name
+    var unit: String = item.unit ?: name
+
     // TODO kinda cool but is this worth   get() = if(remainingAmount == 1.0) field else "${field}s"
-    var iconId:String? = item.iconId
+    var iconId: String? = item.iconId
     private var statusEvents = item.statusEvents
 
     var estimatedTimeRemaining: Long = calculateTimeRemaining()
         private set // not modifiable from outside the class
 
     //TODO error checking
-    var icon:FriendlyIcon? = if(iconId!=null) IconInfo.getIconById(iconId!!)?.icon else null
+    var icon: FriendlyIcon? = if (iconId != null) IconInfo.getIconById(iconId!!)?.icon else null
 
     init {
     }

@@ -24,7 +24,6 @@ import com.example.groceriestracker.database.Item
 import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.ui.home.HomeScreen
 import kotlinx.coroutines.launch
-import java.util.*
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -70,25 +69,6 @@ fun GroceriesTrackerApp(
         //val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route ?: TopLevelDestinations.HOME_ROUTE
-        /* uses drawaer that comes from the side
-        ModalNavigationDrawer(
-            drawerContent = {
-                AppDrawer(
-                    onNavigateToHome = {
-                        navController.navigate(TopLevelDestinations.HOME_ROUTE)
-                    },
-                    closeDrawer = {
-                        coroutineScope.launch { sizeAwareDrawerState.close() }
-                    },
-                    currentRoute = currentRoute
-                )
-            },
-            drawerState = sizeAwareDrawerState,
-            gesturesEnabled = !isExpandedScreen,
-        ) {
-            TopNavHost(navController = navController)
-        }*/
-        // var presses by remember { mutableIntStateOf(0) }
 
 
         val itemDao = AppDatabase.getDatabase(LocalContext.current).itemDao()
@@ -97,15 +77,15 @@ fun GroceriesTrackerApp(
 
         fun createItem() {
             val newGrapesItem = Item(
-                name="Grapes", amount=10.0, unit="oz", iconId = "grape", statusEvents=emptyList()
+                name = "Grapes", amount = 10.0, unit = "oz", iconId = "grape", statusEvents = emptyList()
             )
             val newBreadItem = Item(
-                name="Bread", amount=1.0, unit="loaf", iconId = "bread", statusEvents=emptyList()
+                name = "Bread", amount = 1.0, unit = "loaf", iconId = "bread", statusEvents = emptyList()
             )
             val newToothpasteItem = Item(
-                name="Toothpase", amount=15.0, unit="tube", iconId = "toothpaste", statusEvents=emptyList()
+                name = "Toothpase", amount = 15.0, unit = "tube", iconId = "toothpaste", statusEvents = emptyList()
             )
-            coroutineScope.launch{
+            coroutineScope.launch {
                 repository.insert(newGrapesItem)
                 repository.insert(newBreadItem)
                 repository.insert(newToothpasteItem)

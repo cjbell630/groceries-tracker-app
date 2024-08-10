@@ -2,7 +2,7 @@ package com.example.groceriestracker.math
 
 import com.example.groceriestracker.database.ItemStatus
 
-fun processStatusEvents(events: List<ItemStatus>){
+fun processStatusEvents(events: List<ItemStatus>) {
 
 }
 
