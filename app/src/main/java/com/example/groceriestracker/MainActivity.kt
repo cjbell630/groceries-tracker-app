@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Receipt
 import androidx.compose.material3.*
@@ -63,7 +64,7 @@ fun GroceriesTrackerApp(
 ) {
     GroceriesTrackerTheme {
         val navController = rememberNavController()
-        TopNavHost(navController = navController)
+        //TopNavHost(navController = navController)
         val coroutineScope = rememberCoroutineScope()
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
         //val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
@@ -125,6 +126,20 @@ fun GroceriesTrackerApp(
                             navController.navigate(TopLevelDestinations.HOME_ROUTE)
                         }
                     )
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                Icons.Rounded.Checklist,
+                                contentDescription = "Check"
+
+                            )
+                        },
+                        label = { Text("Check") },
+                        selected = currentRoute == TopLevelDestinations.CHECK_ROUTE,
+                        onClick = {
+                            navController.navigate(TopLevelDestinations.CHECK_ROUTE)
+                        }
+                    )
                 }
             },
             floatingActionButton = {
@@ -133,7 +148,7 @@ fun GroceriesTrackerApp(
                 }
             }
         ) { innerPadding ->
-            HomeScreen(innerPadding, allItems)
+            TopNavHost(navController, innerPadding, allItems)
         }
     }
 }
