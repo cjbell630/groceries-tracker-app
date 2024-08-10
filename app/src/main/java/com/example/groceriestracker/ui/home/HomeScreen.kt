@@ -20,7 +20,9 @@ fun HomeScreen(innerPadding: PaddingValues, processedItems: List<ProcessedItem>)
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         LazyColumn {
-            items(processedItems) { processedItem: ProcessedItem ->
+            items(processedItems.sortedBy {
+                item -> item.estimatedTimeRemaining // TODO does this work?
+            }) { processedItem: ProcessedItem ->
                 ItemCard(processedItem)
             }
         }

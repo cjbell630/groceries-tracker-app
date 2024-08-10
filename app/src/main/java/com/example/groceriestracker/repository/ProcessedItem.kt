@@ -42,6 +42,7 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
     }
 
     private fun calculateTimeRemaining(): Long {
-        return estimateTimeRemaining(statusEvents)
+        return remainingAmount?.toLong()!! // TODO placeholder
+        // TODO return estimateTimeRemaining(statusEvents)
     }
 }
