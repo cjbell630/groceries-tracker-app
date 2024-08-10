@@ -9,16 +9,18 @@ import androidx.room.TypeConverters
 
 @Entity
 data class Item(
-    @PrimaryKey val uid: Int,
+    @PrimaryKey(autoGenerate = true) val uid: Int=0,
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "amount") val amount: Double?,
     @ColumnInfo(name = "unit") val unit: String?,
+    @ColumnInfo(name = "icon_id") val iconId: String?,
     @ColumnInfo(name = "status_events") @TypeConverters(ItemStatusTypeConverter::class) val statusEvents: List<ItemStatus>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
         parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
         parcel.readString(),
         parcel.createTypedArrayList(ItemStatus.CREATOR) ?: emptyList()
     )
@@ -28,6 +30,7 @@ data class Item(
         parcel.writeString(name)
         parcel.writeValue(amount)
         parcel.writeString(unit)
+        parcel.writeString(iconId)
         parcel.writeTypedList(statusEvents)
     }
 
