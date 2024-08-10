@@ -110,4 +110,8 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata")
     // Optional - Integration with RxJava
     //implementation("androidx.compose.runtime:runtime-rxjava2")
+
+    //Android-Iconics (to import more icons from online libraries instead of downloading)
+    implementation("com.mikepenz:iconics-compose:5.4.0")
+    implementation("com.mikepenz:community-material-typeface:7.0.96.1-kotlin@aar")
 }
