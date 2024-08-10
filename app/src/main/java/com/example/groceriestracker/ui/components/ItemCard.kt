@@ -19,7 +19,7 @@ val THINGY_SP = 8.sp
 @Composable
 fun ItemCard(item: ProcessedItem) {
     ElevatedCard(
-        Modifier.padding(2 * THINGY)
+        Modifier.padding(horizontal=2 * THINGY, vertical=1*THINGY)
     ) {
         Row(
             modifier = Modifier
@@ -33,9 +33,7 @@ fun ItemCard(item: ProcessedItem) {
                 horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically // Centers items vertically
             ) { // row contains
-                Icon(
-                    Icons.Rounded.Egg,
-                    contentDescription = "item icon",
+                item.icon?.Display(
                     modifier = Modifier
                         .size(10 * THINGY) // Larger icon size
                         .padding(end = 1 * THINGY)

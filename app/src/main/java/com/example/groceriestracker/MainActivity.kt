@@ -20,8 +20,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
+import com.example.groceriestracker.database.Item
 import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.ui.home.HomeScreen
+import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -92,6 +95,23 @@ fun GroceriesTrackerApp(
         val repository = ItemRepository(itemDao)
         val allItems by repository.processedItems.observeAsState(emptyList())
 
+        fun createItem() {
+            val newGrapesItem = Item(
+                name="Grapes", amount=10.0, unit="oz", iconId = "grape", statusEvents=emptyList()
+            )
+            val newBreadItem = Item(
+                name="Bread", amount=1.0, unit="loaf", iconId = "bread", statusEvents=emptyList()
+            )
+            val newToothpasteItem = Item(
+                name="Toothpase", amount=15.0, unit="tube", iconId = "toothpaste", statusEvents=emptyList()
+            )
+            coroutineScope.launch{
+                repository.insert(newGrapesItem)
+                repository.insert(newBreadItem)
+                repository.insert(newToothpasteItem)
+            }
+        }
+
 
 
         Scaffold(
@@ -128,7 +148,7 @@ fun GroceriesTrackerApp(
                 }
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = { /*TODO*/ }) {
+                FloatingActionButton(onClick = { createItem() }) {
                     Icon(Icons.Rounded.Add, contentDescription = "Add")
                 }
             }
