@@ -114,4 +114,7 @@ dependencies {
     //Android-Iconics (to import more icons from online libraries instead of downloading)
     implementation("com.mikepenz:iconics-compose:5.4.0")
     implementation("com.mikepenz:community-material-typeface:7.0.96.1-kotlin@aar")
+
+    // barcode scanner
+    implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
 }
