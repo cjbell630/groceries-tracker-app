@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.example.groceriestracker.repository.ProcessedItem
+import java.util.*
 
 val THINGY = 8.dp
 val THINGY_SP = 8.sp
@@ -50,7 +51,12 @@ fun ItemCard(item: ProcessedItem) {
 
                 CircularProgressIndicator(
                     progress = {
-                        0.8f //TODO
+                        // TODO verify this works
+                        // TODO add error checking for if lastUpdate is null ( should never happen but still)
+                        // use elvis
+                        ((Date().time - item.history.lastUpdate?.time!!) /
+                                (item.history.estimatedExpiryTime - item.history.lastUpdate?.time!!)
+                        ).toFloat()
                     },
                     color = Color.Red,
                     trackColor = Color.Green,

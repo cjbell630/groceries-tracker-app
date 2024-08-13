@@ -2,6 +2,18 @@ package com.example.groceriestracker.math
 
 import com.example.groceriestracker.database.ItemStatus
 
+class ProcessedItemHistory(private val events: List<ItemStatus>){
+    val lastUpdate:ItemStatus?
+        get() = events.lastOrNull()
+    val estimatedExpiryTime:Long
+    init{
+        // TODO process
+        estimatedExpiryTime = 0 //TODO
+    }
+
+
+}
+
 fun processStatusEvents(events: List<ItemStatus>) {
 
 }
