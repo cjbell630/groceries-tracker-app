@@ -3,6 +3,7 @@ package com.example.groceriestracker.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+@Dao
 interface UpcAssociationDao {
     @Query("SELECT * FROM upcAssociation")
     fun getAll(): LiveData<List<UpcAssociation>>

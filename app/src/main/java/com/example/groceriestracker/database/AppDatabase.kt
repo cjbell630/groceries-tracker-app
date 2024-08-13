@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Item::class], version = 1)
+@Database(entities = [Item::class, UpcAssociation::class], version = 1)
 @TypeConverters(ItemStatusTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
+    abstract fun upcAssociationDao(): UpcAssociationDao
 
     companion object {
         @Volatile

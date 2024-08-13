@@ -9,17 +9,23 @@ import androidx.room.TypeConverters
 
 @Entity
 data class UpcAssociation(
-    @PrimaryKey val upc: Long = 0,
-    @ColumnInfo(name = "item_id") val itemId: Int
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
+    @ColumnInfo(name = "upc") val upc: String?,
+    @ColumnInfo(name = "item_id") val itemId: Int,
+    @ColumnInfo(name = "amount") val amount: Double,// TODO add unit props
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
-        parcel.readLong(),
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readDouble()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(upc)
+        parcel.writeInt(uid)
+        parcel.writeString(upc)
         parcel.writeInt(itemId)
+        parcel.writeDouble(amount)
     }
 
     override fun describeContents(): Int {
