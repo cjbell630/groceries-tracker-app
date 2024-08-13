@@ -1,5 +1,6 @@
 package com.example.groceriestracker.repository
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
@@ -32,7 +33,7 @@ class UpcAssociationRepository(private val upcAssociationDao: UpcAssociationDao)
     }
 
     fun getUpcAssociation(upc: String):UpcAssociation? {
-        val allUpcsList = allUpcs.value
+        val allUpcsList = allUpcs.value // NOTE seems to always return nul
         return allUpcsList?.find{
             upcAssociation -> upcAssociation.upc == upc
         }
