@@ -7,7 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.groceriestracker.database.UpcAssociation
+import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.repository.ProcessedItem
+import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.check.CheckScreen
 import com.example.groceriestracker.ui.home.HomeScreen
 
@@ -21,7 +24,10 @@ object TopLevelDestinations {
 fun TopNavHost(
     navController: NavHostController = rememberNavController(),
     innerPadding: PaddingValues,
-    allItems: List<ProcessedItem>
+    allItems: List<ProcessedItem>,
+    getUpcAssociation: (String) -> UpcAssociation?,
+    addUpcAssociation: (UpcAssociation) -> Unit,
+    incrementItemQuantity: (Int, Double) -> Unit
 ) {
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         composable(TopLevelDestinations.HOME_ROUTE) {
@@ -29,7 +35,7 @@ fun TopNavHost(
         }
 
         composable(TopLevelDestinations.CHECK_ROUTE) {
-            CheckScreen(innerPadding, allItems)
+            CheckScreen(innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity)
         }
     }
 }

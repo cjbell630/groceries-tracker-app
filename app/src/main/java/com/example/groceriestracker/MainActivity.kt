@@ -22,9 +22,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
 import com.example.groceriestracker.database.Item
+import com.example.groceriestracker.database.ItemStatus
+import com.example.groceriestracker.database.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
-import com.example.groceriestracker.ui.home.HomeScreen
+import com.example.groceriestracker.repository.UpcAssociationRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -71,25 +74,52 @@ fun GroceriesTrackerApp(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route ?: TopLevelDestinations.HOME_ROUTE
 
+        val appDatabase = AppDatabase.getDatabase(LocalContext.current)
 
-        val itemDao = AppDatabase.getDatabase(LocalContext.current).itemDao()
-        val repository = ItemRepository(itemDao)
-        val allItems by repository.processedItems.observeAsState(emptyList())
+        val itemDao = appDatabase.itemDao()
+        val itemRepository = ItemRepository(itemDao)
+        val allItems by itemRepository.processedItems.observeAsState(emptyList())
+
+        val upcAssociationDao = appDatabase.upcAssociationDao()
+        val upcAssociationRepository = UpcAssociationRepository(upcAssociationDao)
+
+        fun incrementItemQuantity(id: Int, amountToIncrement: Double){
+            val item = allItems.find {
+                item -> item.databaseEntryUID == id
+            }
+            item?.incrementQuantity(amountToIncrement)
+            coroutineScope.launch {
+                item?.saveToDatabase()
+            }
+        }
+
+        fun getUpcAssociation(upc: String) : UpcAssociation? {
+            return upcAssociationRepository.getUpcAssociation(upc)
+        }
+
+        fun addUpcAssociation(upcAssociation: UpcAssociation){
+            coroutineScope.launch {
+                upcAssociationRepository.insert(upcAssociation)
+            }
+        }
 
         fun createItem() {
             val newGrapesItem = Item(
-                name = "Grapes", amount = 10.0, unit = "oz", iconId = "grape", statusEvents = emptyList()
+                name = "Grapes", amount = 10.0, unit = "oz",
+                iconId = "grape", statusEvents = listOf(ItemStatus(1723339395, 10.0))
             )
             val newBreadItem = Item(
-                name = "Bread", amount = 1.0, unit = "loaf", iconId = "bread", statusEvents = emptyList()
+                name = "Bread", amount = 1.0, unit = "loaf",
+                iconId = "bread", statusEvents = listOf(ItemStatus(1723166595, 1.0))
             )
             val newToothpasteItem = Item(
-                name = "Toothpase", amount = 15.0, unit = "tube", iconId = "toothpaste", statusEvents = emptyList()
+                name = "Toothpase", amount = 15.0, unit = "tube",
+                iconId = "toothpaste", statusEvents = listOf(ItemStatus(Date().time, 15.0))
             )
             coroutineScope.launch {
-                repository.insert(newGrapesItem)
-                repository.insert(newBreadItem)
-                repository.insert(newToothpasteItem)
+                itemRepository.insert(newGrapesItem)
+                itemRepository.insert(newBreadItem)
+                itemRepository.insert(newToothpasteItem)
             }
         }
 
@@ -103,7 +133,7 @@ fun GroceriesTrackerApp(
                     },
                     actions = {
                         IconButton(onClick = {
-                            //open shopping list
+
                         }) {
                             Icon(Icons.Rounded.Receipt, contentDescription = "Open shopping list")
                         }
@@ -148,7 +178,7 @@ fun GroceriesTrackerApp(
                 }
             }
         ) { innerPadding ->
-            TopNavHost(navController, innerPadding, allItems)
+            TopNavHost(navController, innerPadding, allItems, ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity)
         }
     }
 }
