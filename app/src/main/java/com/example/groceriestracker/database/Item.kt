@@ -11,7 +11,6 @@ import androidx.room.TypeConverters
 data class Item(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @ColumnInfo(name = "name") val name: String?,
-    @ColumnInfo(name = "amount") val amount: Double?,
     @ColumnInfo(name = "unit") val unit: String?,
     @ColumnInfo(name = "icon_id") val iconId: String?,
     // TODO add "needs update" boolean field
@@ -20,7 +19,6 @@ data class Item(
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readString(),
         parcel.readString(),
         parcel.createTypedArrayList(ItemStatus.CREATOR) ?: emptyList()
@@ -29,7 +27,6 @@ data class Item(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(uid)
         parcel.writeString(name)
-        parcel.writeValue(amount)
         parcel.writeString(unit)
         parcel.writeString(iconId)
         parcel.writeTypedList(statusEvents)

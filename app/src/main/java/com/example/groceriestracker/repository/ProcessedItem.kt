@@ -13,12 +13,8 @@ import java.util.*
 class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
     val databaseEntryUID = item.uid
     var name: String = item.name ?: ""
-    var remainingAmount: Double? = item.amount
-        set(value) {
-            // TODO write
-            // TODO see if called on incrementation
-            field = value
-        }
+    val remainingAmount: Double?
+        get() = history.lastUpdate?.amount
 
     var unit: String = item.unit ?: name
 
@@ -41,7 +37,7 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
      * Create a new item containing the current state of this object and save it to the database
      */
     suspend fun saveToDatabase() {
-        val newItem = Item(databaseEntryUID, name, remainingAmount, unit, iconId, statusEvents.toList())
+        val newItem = Item(databaseEntryUID, name, unit, iconId, statusEvents.toList())
         onSave(newItem)
         // TODO refresh?
     }

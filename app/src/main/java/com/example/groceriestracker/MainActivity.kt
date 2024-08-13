@@ -1,6 +1,7 @@
 package com.example.groceriestracker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.icons.Icons
@@ -83,6 +84,9 @@ fun GroceriesTrackerApp(
 
         val upcAssociationDao = appDatabase.upcAssociationDao()
         val upcAssociationRepository = UpcAssociationRepository(upcAssociationDao)
+        // TODO might cause excessive reloads but necessary for getUpcAssociation, for some reason
+        // it's null if you use value so you have to use observeasstate but that can only be called from a composable so
+        val allUpcsList by upcAssociationRepository.allUpcs.observeAsState(emptyList())
 
         fun incrementItemQuantity(id: Int, amountToIncrement: Double) {
             val item = allItems.find { item ->
@@ -95,7 +99,13 @@ fun GroceriesTrackerApp(
         }
 
         fun getUpcAssociation(upc: String): UpcAssociation? {
-            return upcAssociationRepository.getUpcAssociation(upc)
+            Log.d("MainActivity", "searching for upc ${upc} in list ${allUpcsList.joinToString {
+                    upcAssociation -> upcAssociation.upc!!
+            }}")
+            return allUpcsList.find{
+                    upcAssociation -> upcAssociation.upc == upc
+            }
+            //return upcAssociationRepository.getUpcAssociation(upc)
         }
 
         fun addUpcAssociation(upcAssociation: UpcAssociation) {
@@ -113,15 +123,15 @@ fun GroceriesTrackerApp(
 
         fun createItem() {
             val newGrapesItem = Item(
-                name = "Grapes", amount = 10.0, unit = "oz",
+                name = "Grapes", unit = "oz",
                 iconId = "grape", statusEvents = listOf(ItemStatus(1723339395, 10.0))
             )
             val newBreadItem = Item(
-                name = "Bread", amount = 1.0, unit = "loaf",
+                name = "Bread", unit = "loaf",
                 iconId = "bread", statusEvents = listOf(ItemStatus(1723166595, 1.0))
             )
             val newToothpasteItem = Item(
-                name = "Toothpase", amount = 15.0, unit = "tube",
+                name = "Toothpaste", unit = "tube",
                 iconId = "toothpaste", statusEvents = listOf(ItemStatus(Date().time, 15.0))
             )
             coroutineScope.launch {
