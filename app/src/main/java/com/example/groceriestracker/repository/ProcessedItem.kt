@@ -62,4 +62,8 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
         //TODO recalc history
         //NOTE does not save to database
     }
+
+    fun matchQuery(query: String): Boolean {
+        return name.contains(query, ignoreCase = true) // TODO
+    }
 }

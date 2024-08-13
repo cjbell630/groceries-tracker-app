@@ -22,7 +22,14 @@ import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.components.ItemCard
 
 @Composable
-fun CheckScreen(innerPadding: PaddingValues, processedItems: List<ProcessedItem>, getUpcAssociation: (String) -> UpcAssociation?, addUpcAssociation: (UpcAssociation) -> Unit, incrementItemQuantity: (Int, Double) -> Unit) {
+fun CheckScreen(
+    innerPadding: PaddingValues,
+    processedItems: List<ProcessedItem>,
+    getUpcAssociation: (String) -> UpcAssociation?,
+    addUpcAssociation: (UpcAssociation) -> Unit,
+    incrementItemQuantity: (Int, Double) -> Unit,
+    searchItems: (String) -> List<ProcessedItem>
+) {
     val scanner = BarcodeScanner(LocalContext.current)
 
     Column(
@@ -30,9 +37,9 @@ fun CheckScreen(innerPadding: PaddingValues, processedItems: List<ProcessedItem>
             .padding(innerPadding),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        BarcodeDialog(scanner, getUpcAssociation, addUpcAssociation, incrementItemQuantity)
+        BarcodeDialog(scanner, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
 
-        ElevatedButton(onClick = {scanner.scanBarcode()}) {
+        ElevatedButton(onClick = { scanner.scanBarcode() }) {
             Text("Scan bulk")
         }
         LazyColumn {

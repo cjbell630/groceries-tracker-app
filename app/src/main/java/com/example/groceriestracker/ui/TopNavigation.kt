@@ -27,7 +27,8 @@ fun TopNavHost(
     allItems: List<ProcessedItem>,
     getUpcAssociation: (String) -> UpcAssociation?,
     addUpcAssociation: (UpcAssociation) -> Unit,
-    incrementItemQuantity: (Int, Double) -> Unit
+    incrementItemQuantity: (Int, Double) -> Unit,
+    searchItems: (String) -> List<ProcessedItem>
 ) {
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         composable(TopLevelDestinations.HOME_ROUTE) {
@@ -35,7 +36,7 @@ fun TopNavHost(
         }
 
         composable(TopLevelDestinations.CHECK_ROUTE) {
-            CheckScreen(innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity)
+            CheckScreen(innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
         }
     }
 }

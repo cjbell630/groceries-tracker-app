@@ -25,6 +25,7 @@ import com.example.groceriestracker.database.Item
 import com.example.groceriestracker.database.ItemStatus
 import com.example.groceriestracker.database.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
+import com.example.groceriestracker.repository.ProcessedItem
 import com.example.groceriestracker.repository.UpcAssociationRepository
 import kotlinx.coroutines.launch
 import java.util.*
@@ -83,9 +84,9 @@ fun GroceriesTrackerApp(
         val upcAssociationDao = appDatabase.upcAssociationDao()
         val upcAssociationRepository = UpcAssociationRepository(upcAssociationDao)
 
-        fun incrementItemQuantity(id: Int, amountToIncrement: Double){
-            val item = allItems.find {
-                item -> item.databaseEntryUID == id
+        fun incrementItemQuantity(id: Int, amountToIncrement: Double) {
+            val item = allItems.find { item ->
+                item.databaseEntryUID == id
             }
             item?.incrementQuantity(amountToIncrement)
             coroutineScope.launch {
@@ -93,13 +94,20 @@ fun GroceriesTrackerApp(
             }
         }
 
-        fun getUpcAssociation(upc: String) : UpcAssociation? {
+        fun getUpcAssociation(upc: String): UpcAssociation? {
             return upcAssociationRepository.getUpcAssociation(upc)
         }
 
-        fun addUpcAssociation(upcAssociation: UpcAssociation){
+        fun addUpcAssociation(upcAssociation: UpcAssociation) {
             coroutineScope.launch {
                 upcAssociationRepository.insert(upcAssociation)
+            }
+        }
+
+        fun searchItems(query: String): List<ProcessedItem> {
+            val realQuery = query.lowercase() // TODO
+            return allItems.filter { item ->
+                item.matchQuery(realQuery)
             }
         }
 
@@ -178,7 +186,10 @@ fun GroceriesTrackerApp(
                 }
             }
         ) { innerPadding ->
-            TopNavHost(navController, innerPadding, allItems, ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity)
+            TopNavHost(
+                navController, innerPadding, allItems,
+                ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity, ::searchItems
+            )
         }
     }
 }
