@@ -28,6 +28,9 @@ import com.example.groceriestracker.database.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.repository.ProcessedItem
 import com.example.groceriestracker.repository.UpcAssociationRepository
+import com.example.groceriestracker.ui.components.BottomNavBar
+import com.example.groceriestracker.ui.components.DynamicFab
+import com.example.groceriestracker.ui.components.TopAppBar
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -75,6 +78,11 @@ fun GroceriesTrackerApp(
         //val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route ?: TopLevelDestinations.HOME_ROUTE
+
+        /* App Bars and stuff */
+        val bottomNavBar = BottomNavBar(currentRoute, navController)
+        val topAppBar = TopAppBar()
+        val floatingActionButton = DynamicFab{} /*do nothing on click*/
 
         val appDatabase = AppDatabase.getDatabase(LocalContext.current)
 
@@ -145,59 +153,18 @@ fun GroceriesTrackerApp(
 
         Scaffold(
             topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text("Groceries Tracker")
-                    },
-                    actions = {
-                        IconButton(onClick = {
-
-                        }) {
-                            Icon(Icons.Rounded.Receipt, contentDescription = "Open shopping list")
-                        }
-                    }
-                )
+                topAppBar.Display()
             },
             bottomBar = {
-                NavigationBar() {
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                Icons.Rounded.Home,
-                                contentDescription = "Home"
-
-                            )
-                        },
-                        label = { Text("Home") },
-                        selected = currentRoute == TopLevelDestinations.HOME_ROUTE,
-                        onClick = {
-                            navController.navigate(TopLevelDestinations.HOME_ROUTE)
-                        }
-                    )
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                Icons.Rounded.Checklist,
-                                contentDescription = "Check"
-
-                            )
-                        },
-                        label = { Text("Check") },
-                        selected = currentRoute == TopLevelDestinations.CHECK_ROUTE,
-                        onClick = {
-                            navController.navigate(TopLevelDestinations.CHECK_ROUTE)
-                        }
-                    )
-                }
+                bottomNavBar.Display()
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = { createItem() }) {
-                    Icon(Icons.Rounded.Add, contentDescription = "Add")
-                }
+                floatingActionButton.Display()
             }
         ) { innerPadding ->
             TopNavHost(
                 navController, innerPadding, allItems,
+                topAppBar, bottomNavBar, floatingActionButton,
                 ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity, ::searchItems
             )
         }

@@ -12,6 +12,9 @@ import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.repository.ProcessedItem
 import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.check.CheckScreen
+import com.example.groceriestracker.ui.components.BottomNavBar
+import com.example.groceriestracker.ui.components.DynamicFab
+import com.example.groceriestracker.ui.components.TopAppBar
 import com.example.groceriestracker.ui.home.HomeScreen
 
 object TopLevelDestinations {
@@ -25,6 +28,11 @@ fun TopNavHost(
     navController: NavHostController = rememberNavController(),
     innerPadding: PaddingValues,
     allItems: List<ProcessedItem>,
+
+    topAppBar: TopAppBar,
+    bottomNavBar: BottomNavBar,
+    floatingActionButton: DynamicFab,
+
     getUpcAssociation: (String) -> UpcAssociation?,
     addUpcAssociation: (UpcAssociation) -> Unit,
     incrementItemQuantity: (Int, Double) -> Unit,
