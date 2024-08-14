@@ -9,10 +9,13 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.groceriestracker.R
 import com.example.groceriestracker.ui.TopLevelDestinations
 
 class BottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navController: NavController) {
@@ -38,28 +41,51 @@ class BottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navCon
                 icon = {
                     Icon(
                         Icons.Rounded.Home,
-                        contentDescription = "Home"
+                        contentDescription = stringResource(R.string.label_home)
 
                     )
                 },
-                label = { Text("Home") },
+                label = { Text(stringResource(R.string.label_home)) },
                 selected = navBackStackEntry?.isUnder(TopLevelDestinations.HOME_ROUTE) ?: false,
                 onClick = {
-                    navController.navigate(TopLevelDestinations.HOME_ROUTE)
+                    navController.navigate(TopLevelDestinations.HOME_ROUTE) {
+                        /*TODO fix back button behavior on parallel navigation
+                        popUpTo(TopLevelDestinations.HOME_ROUTE){
+                            inclusive=true
+                            saveState=true
+                        }
+                        launchSingleTop = true
+                        restoreState = true*/
+                    }
+                    Log.d(
+                        "BottomNavBar",
+                        "navigating to home; full route: ${navBackStackEntry?.destination?.hierarchy?.joinToString { navDestination: NavDestination -> navDestination.route ?: "null" }}"
+                    )
                 }
             )
             NavigationBarItem(
                 icon = {
                     Icon(
                         Icons.Rounded.Checklist,
-                        contentDescription = "Check"
-
+                        contentDescription = stringResource(R.string.label_shopping_list)
                     )
                 },
-                label = { Text("Check") },
+                label = { Text(stringResource(R.string.label_shopping_list)) },
                 selected = navBackStackEntry?.isUnder(TopLevelDestinations.CHECK_ROUTE) ?: false,
                 onClick = {
-                    navController.navigate(TopLevelDestinations.CHECK_ROUTE)
+                    navController.navigate(TopLevelDestinations.CHECK_ROUTE) {
+                        /* TODO fix back button behavior on parallel navigation
+                        popUpTo(TopLevelDestinations.CHECK_ROUTE){
+                            inclusive=true
+                            saveState=true
+                        }
+                        launchSingleTop = true
+                        restoreState = true*/
+                    }
+                    Log.d(
+                        "BottomNavBar",
+                        "navigating to home; full route: ${navBackStackEntry?.destination?.hierarchy?.joinToString { navDestination: NavDestination -> navDestination.route ?: "null" }}"
+                    )
                 }
             )
         }

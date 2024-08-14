@@ -20,6 +20,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
 import com.example.groceriestracker.database.Item
@@ -128,17 +129,18 @@ fun GroceriesTrackerApp(
             }
         }
 
+        /*
         fun createItem() {
             val newGrapesItem = Item(
-                name = "Grapes", unit = "oz",
+                name = stringResource(R.string.label_item_grapes), unit = stringResource(R.string.label_unit_oz),
                 iconId = "grape", statusEvents = listOf(ItemStatus(1723339395, 10.0))
             )
             val newBreadItem = Item(
-                name = "Bread", unit = "loaf",
+                name = stringResource(R.string.label_item_bread), unit = "loaf",
                 iconId = "bread", statusEvents = listOf(ItemStatus(1723166595, 1.0))
             )
             val newToothpasteItem = Item(
-                name = "Toothpaste", unit = "tube",
+                name = stringResource(R.string.label_item_toothpaste), unit = "tube",
                 iconId = "toothpaste", statusEvents = listOf(ItemStatus(Date().time, 15.0))
             )
             coroutineScope.launch {
@@ -146,7 +148,7 @@ fun GroceriesTrackerApp(
                 itemRepository.insert(newBreadItem)
                 itemRepository.insert(newToothpasteItem)
             }
-        }
+        }*/
 
 
 

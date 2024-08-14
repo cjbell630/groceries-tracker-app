@@ -12,10 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.groceriestracker.BarcodeScanner
 import com.example.groceriestracker.BarcodeScanner.Companion.BarcodeDialog
+import com.example.groceriestracker.R
 import com.example.groceriestracker.database.UpcAssociation
 import com.example.groceriestracker.repository.ProcessedItem
 import com.example.groceriestracker.repository.UpcAssociationRepository
@@ -40,7 +42,7 @@ fun CheckScreen(
         BarcodeDialog(scanner, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
 
         ElevatedButton(onClick = { scanner.scanBarcode() }) {
-            Text("Scan bulk")
+            Text(stringResource(R.string.scan_bulk))
         }
         LazyColumn {
             items(processedItems.filter { item ->

@@ -1,9 +1,11 @@
 <resources>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="item_amount">Item Amount</string>
-    <string name="item_name">Item Name</string>
-    <string name="item_unit">Item Unit</string>
-    <string name="app_name">Groceries Tracker</string>
+    <string name="external_app_name">Groceries Tracker</string>
+    <string name="header_app_name">Groceries Tracker</string>
+    <string name="label_home">Home</string>
+    <string name="label_shopping_list">Shopping List</string>
+    <string name="label_unit_oz">oz</string>
+    <string name="label_item_grapes">Grapes</string>
+    <string name="label_item_bread">Bread</string>
+    <string name="label_item_toothpaste">Toothpaste</string>
+    <string name="scan_bulk">Scan bulk</string>
 </resources>

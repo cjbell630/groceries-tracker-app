@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_home">ホーム</string>
-    <string name="app_name">Groceries Tracker</string>
+    <string name="label_home">ホーム</string>
+    <string name="label_shopping_list">買い物リスト</string>
+    <string name="label_item_grapes">ぶどう</string>
+    <string name="label_item_bread">パン</string>
+    <string name="label_item_toothpaste">歯磨き粉</string>
 </resources>
