@@ -40,10 +40,12 @@ fun TopNavHost(
 ) {
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         composable(TopLevelDestinations.HOME_ROUTE) {
+            floatingActionButton.show = true
             HomeScreen(innerPadding, allItems)
         }
 
         composable(TopLevelDestinations.CHECK_ROUTE) {
+            floatingActionButton.show = false
             CheckScreen(innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
         }
     }
