@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui
+package com.example.groceriestracker.ui.home
 
 import android.util.Log
 import androidx.compose.animation.*
@@ -8,6 +8,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,34 +17,27 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.groceriestracker.database.UpcAssociation
 import com.example.groceriestracker.repository.ProcessedItem
+import com.example.groceriestracker.ui.TopLevelDestinations
 import com.example.groceriestracker.ui.check.CheckScreen
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
 import com.example.groceriestracker.ui.components.TopAppBar
-import com.example.groceriestracker.ui.home.HomeDestinations
-import com.example.groceriestracker.ui.home.HomeNavHost
 import com.example.groceriestracker.ui.home.HomeScreen
 
-object TopLevelDestinations {
-    const val HOME_ROUTE = "home"
-    const val CHECK_ROUTE = "check"
+object HomeDestinations {
+    const val LIST_ROUTE = "item_list"
+    const val CREATE_ROUTE = "create"
 
 }
 
-@Composable
-fun TopNavHost(
-    navController: NavHostController = rememberNavController(),
+fun HomeNavHost(
+    navGraphBuilder: NavGraphBuilder,
+    route: String,
     innerPadding: PaddingValues,
     allItems: List<ProcessedItem>,
-
     topAppBar: TopAppBar,
     bottomNavBar: BottomNavBar,
     floatingActionButton: DynamicFab,
-
-    getUpcAssociation: (String) -> UpcAssociation?,
-    addUpcAssociation: (UpcAssociation) -> Unit,
-    incrementItemQuantity: (Int, Double) -> Unit,
-    searchItems: (String) -> List<ProcessedItem>
 ) {
     fun baseNavEnterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition? {
         return {
@@ -54,24 +49,25 @@ fun TopNavHost(
             )
         }
     }
+
     fun baseNavExitTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition? {
         return {
             fadeOut(
-                animationSpec= tween(300, easing = LinearEasing)
+                animationSpec = tween(300, easing = LinearEasing)
             )
         }
     }
-
-    NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
-        HomeNavHost(this@NavHost, TopLevelDestinations.HOME_ROUTE, innerPadding, allItems, topAppBar, bottomNavBar, floatingActionButton)
-
+    navGraphBuilder.navigation(
+        route = route,
+        startDestination = HomeDestinations.LIST_ROUTE
+    ) {
         composable(
-            TopLevelDestinations.CHECK_ROUTE,
+            HomeDestinations.LIST_ROUTE,
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            floatingActionButton.show = false
-            CheckScreen(innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
+            floatingActionButton.show = true
+            HomeScreen(innerPadding, allItems)
         }
     }
 }
