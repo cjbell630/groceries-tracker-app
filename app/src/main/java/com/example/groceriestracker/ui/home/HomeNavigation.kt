@@ -23,6 +23,7 @@ import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
 import com.example.groceriestracker.ui.components.TopAppBar
 import com.example.groceriestracker.ui.home.HomeScreen
+import com.example.groceriestracker.ui.home.create.CreateScreen
 
 object HomeDestinations {
     const val LIST_ROUTE = "item_list"
@@ -33,6 +34,7 @@ object HomeDestinations {
 
 fun HomeNavGraph(
     navGraphBuilder: NavGraphBuilder,
+    navController: NavHostController,
     route: String,
     innerPadding: PaddingValues,
     allItems: List<ProcessedItem>,
@@ -69,7 +71,22 @@ fun HomeNavGraph(
             exitTransition = baseNavExitTransition()
         ) {
             floatingActionButton.show = true
+            floatingActionButton.onClick = {
+                Log.d("HomeNavGraph", "fab clicked")
+                navController.navigate(HomeDestinations.CREATE_ROUTE)
+            }
             HomeScreen(innerPadding, allItems)
+        }
+
+        composable(
+            HomeDestinations.CREATE_ROUTE,
+            enterTransition = baseNavEnterTransition(), // TODO
+            exitTransition = baseNavExitTransition() //TODO
+        ) {
+            floatingActionButton.show = true // TODO change to next arrow (then save icon on next screen)
+            // TODO change header
+            // TODO hide bottom bar
+            CreateScreen()
         }
     }
 }

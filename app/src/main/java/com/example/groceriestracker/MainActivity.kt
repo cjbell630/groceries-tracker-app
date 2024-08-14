@@ -77,10 +77,9 @@ fun GroceriesTrackerApp(
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
         //val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: TopLevelDestinations.HOME_ROUTE
 
         /* App Bars and stuff */
-        val bottomNavBar = BottomNavBar(currentRoute, navController)
+        val bottomNavBar = BottomNavBar(navBackStackEntry, navController)
         val topAppBar = TopAppBar()
         val floatingActionButton = DynamicFab() /*do nothing on click*/
 

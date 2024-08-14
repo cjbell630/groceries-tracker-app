@@ -7,13 +7,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 
 class DynamicFab(defaultOnClick: () -> Unit = {}, defaultShow: Boolean = false) {
-    private val onClick: () -> Unit = defaultOnClick
+    var onClick: () -> Unit = defaultOnClick
     var show: Boolean = defaultShow
 
     @Composable
     fun Display() {
         if (show) {
-            FloatingActionButton(onClick = { onClick }) {
+            FloatingActionButton(onClick = onClick ) {
                 Icon(Icons.Rounded.Add, contentDescription = "Add")
             }
         }

@@ -66,13 +66,13 @@ fun TopNavHost(
 
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         HomeNavGraph(
-            this@NavHost, TopLevelDestinations.HOME_ROUTE, innerPadding, allItems,
+            this@NavHost, navController,TopLevelDestinations.HOME_ROUTE, innerPadding, allItems,
             topAppBar, bottomNavBar, floatingActionButton
         )
 
         CheckNavGraph(
-            this@NavHost, TopLevelDestinations.CHECK_ROUTE,
-            innerPadding, allItems, topAppBar, bottomNavBar, floatingActionButton,
+            this@NavHost, TopLevelDestinations.CHECK_ROUTE, innerPadding, allItems,
+            topAppBar, bottomNavBar, floatingActionButton,
             getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
         )
     }
