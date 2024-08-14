@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui.home
+package com.example.groceriestracker.ui.check
 
 import android.util.Log
 import androidx.compose.animation.*
@@ -24,14 +24,12 @@ import com.example.groceriestracker.ui.components.DynamicFab
 import com.example.groceriestracker.ui.components.TopAppBar
 import com.example.groceriestracker.ui.home.HomeScreen
 
-object HomeDestinations {
-    const val LIST_ROUTE = "item_list"
-    const val CREATE_ROUTE = "create"
-
-
+object CheckDestinations {
+    const val LIST_ROUTE = "shopping_list"
+    const val SCAN_ROUTE = "scan"
 }
 
-fun HomeNavGraph(
+fun CheckNavGraph(
     navGraphBuilder: NavGraphBuilder,
     route: String,
     innerPadding: PaddingValues,
@@ -39,6 +37,12 @@ fun HomeNavGraph(
     topAppBar: TopAppBar,
     bottomNavBar: BottomNavBar,
     floatingActionButton: DynamicFab,
+
+
+    getUpcAssociation: (String) -> UpcAssociation?,
+    addUpcAssociation: (UpcAssociation) -> Unit,
+    incrementItemQuantity: (Int, Double) -> Unit,
+    searchItems: (String) -> List<ProcessedItem>
 ) {
     fun baseNavEnterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition? {
         return {
@@ -61,15 +65,17 @@ fun HomeNavGraph(
 
     navGraphBuilder.navigation(
         route = route,
-        startDestination = HomeDestinations.LIST_ROUTE
+        startDestination = CheckDestinations.LIST_ROUTE
     ) {
         composable(
-            HomeDestinations.LIST_ROUTE,
+            CheckDestinations.LIST_ROUTE,
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            floatingActionButton.show = true
-            HomeScreen(innerPadding, allItems)
+            floatingActionButton.show = false
+            CheckScreen(
+                innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
+            )
         }
     }
 }

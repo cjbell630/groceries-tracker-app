@@ -15,12 +15,13 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.groceriestracker.database.UpcAssociation
 import com.example.groceriestracker.repository.ProcessedItem
+import com.example.groceriestracker.ui.check.CheckNavGraph
 import com.example.groceriestracker.ui.check.CheckScreen
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
 import com.example.groceriestracker.ui.components.TopAppBar
 import com.example.groceriestracker.ui.home.HomeDestinations
-import com.example.groceriestracker.ui.home.HomeNavHost
+import com.example.groceriestracker.ui.home.HomeNavGraph
 import com.example.groceriestracker.ui.home.HomeScreen
 
 object TopLevelDestinations {
@@ -54,24 +55,25 @@ fun TopNavHost(
             )
         }
     }
+
     fun baseNavExitTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition? {
         return {
             fadeOut(
-                animationSpec= tween(300, easing = LinearEasing)
+                animationSpec = tween(300, easing = LinearEasing)
             )
         }
     }
 
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
-        HomeNavHost(this@NavHost, TopLevelDestinations.HOME_ROUTE, innerPadding, allItems, topAppBar, bottomNavBar, floatingActionButton)
+        HomeNavGraph(
+            this@NavHost, TopLevelDestinations.HOME_ROUTE, innerPadding, allItems,
+            topAppBar, bottomNavBar, floatingActionButton
+        )
 
-        composable(
-            TopLevelDestinations.CHECK_ROUTE,
-            enterTransition = baseNavEnterTransition(),
-            exitTransition = baseNavExitTransition()
-        ) {
-            floatingActionButton.show = false
-            CheckScreen(innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
-        }
+        CheckNavGraph(
+            this@NavHost, TopLevelDestinations.CHECK_ROUTE,
+            innerPadding, allItems, topAppBar, bottomNavBar, floatingActionButton,
+            getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
+        )
     }
 }
