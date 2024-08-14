@@ -11,6 +11,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven("https://repo.kotlin.link")
     }
     dependencies {
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")

@@ -44,6 +44,9 @@ android {
         dataBinding = true
         compose = true
     }
+    androidResources {
+        generateLocaleConfig = true
+    }
 }
 
 dependencies {
@@ -117,4 +120,8 @@ dependencies {
 
     // barcode scanner
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+
+    // math (cubic spline interpolation)
+    implementation("space.kscience:kmath-core:0.3.1")
+    implementation("space.kscience:kmath-functions:0.3.1")
 }
