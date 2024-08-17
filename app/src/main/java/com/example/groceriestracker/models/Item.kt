@@ -1,4 +1,4 @@
-package com.example.groceriestracker.database
+package com.example.groceriestracker.models
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.example.groceriestracker.database.ItemStatusTypeConverter
 
 @Entity
 data class Item(
@@ -21,7 +22,7 @@ data class Item(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.createTypedArrayList(ItemStatus.CREATOR) ?: emptyList()
+        parcel.createTypedArrayList(ItemStatus) ?: emptyList()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -2,6 +2,7 @@ package com.example.groceriestracker.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.groceriestracker.models.UpcAssociation
 
 @Dao
 interface UpcAssociationDao {

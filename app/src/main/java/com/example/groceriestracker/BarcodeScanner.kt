@@ -8,14 +8,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.fastJoinToString
-import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.room.util.query
-import com.example.groceriestracker.BarcodeScanner.ScannerState
-import com.example.groceriestracker.database.UpcAssociation
-import com.example.groceriestracker.repository.ProcessedItem
-import com.example.groceriestracker.repository.UpcAssociationRepository
+import com.example.groceriestracker.models.UpcAssociation
+import com.example.groceriestracker.models.ProcessedItem
+import com.example.groceriestracker.ui.components.AutofillTextField
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
@@ -84,13 +80,9 @@ class BarcodeScanner(context: Context) {
             onCancel: () -> Unit,
             onSuccessfulSubmit: (Int, Double) -> Unit
         ) {
+            val autofillTextField = AutofillTextField(searchItems) { item -> item?.name ?: "null" }
+
             Log.d("AssociateUPCDialog", "Launching")
-            var selectedItem by remember { mutableStateOf<ProcessedItem?>(null) }
-            var selectedString by remember { mutableStateOf("") }
-            var dropDownExpanded by remember { mutableStateOf(false) }
-            fun isValid() : Boolean{
-                return selectedItem?.name==selectedString
-            }
             BasicAlertDialog(
                 onDismissRequest = { onCancel()/*state = ScannerState.CANCELLED*/ }, // TODO
                 properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false),
@@ -102,46 +94,9 @@ class BarcodeScanner(context: Context) {
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("scanned: ${upc}") // TODO
-                        ExposedDropdownMenuBox( // TODO move to another file
-                            expanded = dropDownExpanded,
-                            onExpandedChange = { dropDownExpanded = !dropDownExpanded }
-                        ) {
-                            TextField(
-                                value = selectedString,
-                                onValueChange = {
-                                    selectedString = it
-                                    if (it != selectedItem?.name) {
-                                        selectedItem = null
-                                    }
-                                    dropDownExpanded = true
-                                },
-                                modifier = Modifier.menuAnchor()
-                            )
-                            var filteredItems: List<ProcessedItem> =
-                                if (selectedString.isNotEmpty()) searchItems(selectedString) else emptyList()
-                            Log.d(
-                                "AssociateUPCDialog",
-                                "Filtered Items: ${filteredItems.joinToString { item -> item.name }}"
-                            )
-                            Log.d("AssociateUPCDialog", "Expanded?: ${dropDownExpanded}}")
-                            if (filteredItems.isNotEmpty()) {
-                                ExposedDropdownMenu(
-                                    expanded = dropDownExpanded,
-                                    onDismissRequest = { dropDownExpanded = false }
-                                ) {
-                                    filteredItems.forEach { item ->
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                selectedString = item.name
-                                                selectedItem = item
-                                                dropDownExpanded=false
-                                            },
-                                            text = { Text(item.name) }
-                                        )
-                                    }
-                                }
-                            }
-                        }
+
+                        autofillTextField.Display()
+
                         Spacer(modifier = Modifier.height(24.dp))
 
                         TextButton(
@@ -151,7 +106,11 @@ class BarcodeScanner(context: Context) {
                             Text("Cancel")
                         }
                         TextButton(
-                            onClick = {if(isValid()){onSuccessfulSubmit(selectedItem?.databaseEntryUID!!, 15.0/*TODO*/)} },
+                            onClick = {
+                                if (autofillTextField.isValid()) {
+                                    onSuccessfulSubmit(autofillTextField.selectedResult?.databaseEntryUID!!, 15.0/*TODO*/)
+                                }
+                            },
                             modifier = Modifier.align(Alignment.Start)
                         ) {
                             Text("Confirm")

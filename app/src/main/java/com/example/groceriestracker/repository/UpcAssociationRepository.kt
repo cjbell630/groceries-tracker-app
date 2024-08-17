@@ -1,12 +1,7 @@
 package com.example.groceriestracker.repository
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
-import com.example.groceriestracker.database.Item
-import com.example.groceriestracker.database.UpcAssociation
+import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.database.UpcAssociationDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -32,7 +27,7 @@ class UpcAssociationRepository(private val upcAssociationDao: UpcAssociationDao)
         }
     }
 
-    fun getUpcAssociation(upc: String):UpcAssociation? {
+    fun getUpcAssociation(upc: String): UpcAssociation? {
         val allUpcsList = allUpcs.value // NOTE seems to always return nul
         return allUpcsList?.find{
             upcAssociation -> upcAssociation.upc == upc

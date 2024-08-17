@@ -4,15 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Checklist
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Receipt
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.compose.rememberNavController
-import com.example.groceriestracker.ui.TopLevelDestinations
 import com.example.groceriestracker.ui.TopNavHost
 import com.example.groceriestracker.ui.theme.GroceriesTrackerTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -20,20 +14,16 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
-import com.example.groceriestracker.database.Item
-import com.example.groceriestracker.database.ItemStatus
-import com.example.groceriestracker.database.UpcAssociation
+import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
-import com.example.groceriestracker.repository.ProcessedItem
+import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
 import com.example.groceriestracker.ui.components.TopAppBar
 import kotlinx.coroutines.launch
-import java.util.*
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

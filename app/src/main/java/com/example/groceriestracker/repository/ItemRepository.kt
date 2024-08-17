@@ -2,8 +2,9 @@ package com.example.groceriestracker.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.example.groceriestracker.database.Item
+import com.example.groceriestracker.models.Item
 import com.example.groceriestracker.database.ItemDao
+import com.example.groceriestracker.models.ProcessedItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -29,6 +30,4 @@ class ItemRepository(private val itemDao: ItemDao) {
             itemDao.insertAll(item)
         }
     }
-
-
 }

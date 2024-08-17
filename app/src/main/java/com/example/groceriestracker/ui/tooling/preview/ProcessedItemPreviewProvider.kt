@@ -1,9 +1,9 @@
 package com.example.groceriestracker.ui.tooling.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.groceriestracker.repository.ProcessedItem
-import com.example.groceriestracker.database.Item
-import com.example.groceriestracker.database.ItemStatus
+import com.example.groceriestracker.models.ProcessedItem
+import com.example.groceriestracker.models.Item
+import com.example.groceriestracker.models.ItemStatus
 
 class ProcessedItemPreviewProvider : PreviewParameterProvider<ProcessedItem> {
     override val values = sequenceOf(

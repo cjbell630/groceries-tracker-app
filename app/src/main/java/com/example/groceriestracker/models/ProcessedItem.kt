@@ -1,13 +1,7 @@
-package com.example.groceriestracker.repository
+package com.example.groceriestracker.models
 
 import com.example.groceriestracker.FriendlyIcon
-import com.example.groceriestracker.IconInfo
-import com.example.groceriestracker.database.Item
-import com.example.groceriestracker.database.ItemStatus
 import com.example.groceriestracker.math.ProcessedItemHistory
-import com.example.groceriestracker.math.estimateTimeRemaining
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import java.util.*
 
 class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
@@ -28,7 +22,7 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
         private set // not modifiable from outside the class
 
     //TODO error checking
-    var icon: FriendlyIcon? = if (iconId != null) IconInfo.getIconById(iconId!!)?.icon else null
+    var icon: FriendlyIcon? = if (iconId != null) Preset.getById(iconId!!)?.icon else null
 
     init {
     }

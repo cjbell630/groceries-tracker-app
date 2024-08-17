@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.groceriestracker.models.Item
+import com.example.groceriestracker.models.UpcAssociation
 
 @Database(entities = [Item::class, UpcAssociation::class], version = 1)
 @TypeConverters(ItemStatusTypeConverter::class)

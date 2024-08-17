@@ -1,6 +1,7 @@
 package com.example.groceriestracker.database
 
 import androidx.room.TypeConverter
+import com.example.groceriestracker.models.ItemStatus
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

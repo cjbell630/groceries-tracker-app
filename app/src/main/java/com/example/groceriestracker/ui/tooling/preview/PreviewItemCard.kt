@@ -6,7 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import com.example.groceriestracker.ui.components.ItemCard
-import com.example.groceriestracker.repository.ProcessedItem
+import com.example.groceriestracker.models.ProcessedItem
 
 @Preview
 @Composable

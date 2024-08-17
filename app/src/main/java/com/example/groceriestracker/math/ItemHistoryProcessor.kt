@@ -1,10 +1,12 @@
 package com.example.groceriestracker.math
 
-import com.example.groceriestracker.database.ItemStatus
+import com.example.groceriestracker.models.ItemStatus
 
 class ProcessedItemHistory(private val events: List<ItemStatus>){
-    val lastUpdate:ItemStatus?
+    val lastUpdate: ItemStatus?
         get() = events.lastOrNull()
+    val lastIncrease: ItemStatus?
+        get() = events.lastOrNull() // TODO
     val estimatedExpiryTime:Long
     init{
         // TODO process
@@ -19,6 +21,7 @@ fun processStatusEvents(events: List<ItemStatus>) {
 }
 
 fun estimateTimeRemaining(events: List<ItemStatus>): Long {
+    //val interpolator: SplineInterpolator<Double> = SplineInterpolator()
     // TODO get average curve from history
     // TODO get current curve since last increase
     // TODO predict future based on
