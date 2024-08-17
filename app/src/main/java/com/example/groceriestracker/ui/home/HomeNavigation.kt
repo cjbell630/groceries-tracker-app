@@ -6,11 +6,13 @@ import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.groceriestracker.R
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
@@ -53,6 +55,8 @@ fun HomeNavGraph(
         }
     }
 
+    //TODO add route defaults for app bars and stuff
+
     navGraphBuilder.navigation(
         route = route,
         startDestination = HomeDestinations.LIST_ROUTE
@@ -63,6 +67,9 @@ fun HomeNavGraph(
             exitTransition = baseNavExitTransition()
         ) {
             floatingActionButton.show = true
+            topAppBar.show = true
+            topAppBar.headerText = stringResource(R.string.header_app_name)
+            topAppBar.showBackButton = false
             floatingActionButton.onClick = {
                 Log.d("HomeNavGraph", "fab clicked")
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
@@ -76,7 +83,9 @@ fun HomeNavGraph(
             exitTransition = baseNavExitTransition() //TODO
         ) {
             floatingActionButton.show = true // TODO change to next arrow (then save icon on next screen)
-            // TODO change header
+            topAppBar.show = true
+            topAppBar.headerText = "Create" //TODO
+            topAppBar.showBackButton = true
             // TODO hide bottom bar
             CreateScreen(innerPadding)
         }

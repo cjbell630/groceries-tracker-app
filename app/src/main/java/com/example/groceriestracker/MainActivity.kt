@@ -71,7 +71,7 @@ fun GroceriesTrackerApp(
 
         /* App Bars and stuff */
         val bottomNavBar = BottomNavBar(navBackStackEntry, navController)
-        val topAppBar = TopAppBar()
+        val topAppBar = TopAppBar(navigateUp=navController::navigateUp)
         val floatingActionButton = DynamicFab() /*do nothing on click*/
 
         val appDatabase = AppDatabase.getDatabase(LocalContext.current)

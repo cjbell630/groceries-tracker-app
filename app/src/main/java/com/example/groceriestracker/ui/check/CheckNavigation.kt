@@ -5,10 +5,12 @@ import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.groceriestracker.R
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.BottomNavBar
@@ -64,6 +66,8 @@ fun CheckNavGraph(
             exitTransition = baseNavExitTransition()
         ) {
             floatingActionButton.show = false
+            topAppBar.show = true
+            topAppBar.headerText = stringResource(R.string.header_app_name)
             CheckScreen(
                 innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
             )
