@@ -1,38 +1,31 @@
-package com.example.groceriestracker
+package com.example.groceriestracker.models
 
-import android.content.Context
 import androidx.compose.ui.graphics.Color
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.WineBar
-import androidx.compose.ui.res.stringArrayResource
+import com.example.groceriestracker.FriendlyIcon
+import com.example.groceriestracker.FriendlyIconicsIcon
 import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
 
-
-class IconInfo(
+class Preset(
     val id: String,
+    val name: String,
     val icon: FriendlyIcon,
-    private val aliases: Array<String>
+    val aliases: List<String>,
+    // TODO category? tags?
+    // unit, unitclass?
 ) {
-    companion object {
 
-        /**
-         * Gets an icon from INFO by id
-         */
-        fun getIconById(id: String): IconInfo? {
-            return INFO.find { iconInfo -> // for each icon
-                iconInfo.id == id
-            }
+    companion object {
+        fun getById(id: String): Preset? {
+            return Presets.find { preset -> preset.id == id }
         }
 
-        /**
-         * Finds all icons that match the search query
-         */
-        fun searchIconsByAlias(alias: String): List<IconInfo> {
+        fun searchByAlias(query: String): List<Preset> {
+            // TODO couldn't I make this the same for processed items
             //val combinedAliases = getCombinedAliases(context)
             // TODO include filter for hiragana, katakana, kanji, romaji
-            val queries = arrayOf(alias.lowercase())
-            return INFO.filter { iconInfo -> // for each icon
-                iconInfo.aliases.any { alias -> // for each alias of that icon
+            val queries = arrayOf(query.lowercase())
+            return Presets.filter { preset -> // for each icon
+                preset.aliases.any { alias -> // for each alias of that icon
                     queries.any { query -> // for each query
                         alias.contains(query) // if query is a substring of alias
                     }
@@ -40,43 +33,46 @@ class IconInfo(
             }
         }
 
-        val INFO = listOf(
-            IconInfo(
+        // TODO how many times is this constructed? should only be once i think
+        val Presets = listOf(
+            Preset(
                 id = "grape",
+                name = "Grapes",
                 icon = FriendlyIconicsIcon(
                     CommunityMaterial.Icon2.cmd_fruit_grapes,
                     Color(0xFF6200EE) // dark purple
                 ),
                 //aliases= stringArrayResource()
-                aliases = arrayOf(
+                aliases = listOf(
                     "grape", "grapes",
                     "グレープ", "ぶどう", "ブドウ"
                 )
             ),
-
-            IconInfo(
+            Preset(
                 id = "toothpaste",
+                name = "Toothpaste",
                 icon = FriendlyIconicsIcon(
                     CommunityMaterial.Icon3.cmd_toothbrush_paste, // TODO find better icon
                     Color(0xFF00ffd0) // minty green
                 ),
-                aliases = arrayOf(
+                aliases = listOf(
                     "toothpaste",
                     //"グレープ", "ぶどう", "ブドウ"
                 )
             ),
-
-            IconInfo(
+            Preset(
                 id = "bread",
+                name = "Bread",
                 icon = FriendlyIconicsIcon(
                     CommunityMaterial.Icon.cmd_baguette,
                     Color(0xFFDFBB7E) // light brown (color of bread)
                 ),
-                aliases = arrayOf(
+                aliases = listOf(
                     "bread",
                     //"グレープ", "ぶどう", "ブドウ"
                 )
             )
         )
+
     }
 }
