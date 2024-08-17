@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.compose.rememberNavController
@@ -13,7 +14,11 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
 import com.example.groceriestracker.models.UpcAssociation
@@ -144,7 +149,6 @@ fun GroceriesTrackerApp(
 
         Scaffold(
             topBar = {
-                topAppBar.Display()
             },
             bottomBar = {
                 bottomNavBar.Display()
@@ -153,11 +157,22 @@ fun GroceriesTrackerApp(
                 floatingActionButton.Display()
             }
         ) { innerPadding ->
-            TopNavHost(
-                navController, innerPadding, allItems,
-                topAppBar, bottomNavBar, floatingActionButton,
-                ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity, ::searchItems
-            )
+            Box(){
+                topAppBar.Display()
+                //Spacer(modifier = Modifier.height(SearchBarDefaults.InputFieldHeight).zIndex(0f))
+                val layoutDir= LocalLayoutDirection.current
+                val newInnerPadding = PaddingValues( // TODO replace this with a call to modifier.padding() and pass as modifier
+                    start = innerPadding.calculateStartPadding(layoutDir),
+                    top=(SearchBarDefaults.InputFieldHeight+8.dp + innerPadding.calculateTopPadding()),
+                    end=innerPadding.calculateEndPadding(layoutDir),
+                    bottom=innerPadding.calculateBottomPadding()
+                )
+                TopNavHost(
+                    navController, newInnerPadding, allItems,
+                    topAppBar, bottomNavBar, floatingActionButton,
+                    ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity, ::searchItems
+                )
+            }
         }
     }
 }
