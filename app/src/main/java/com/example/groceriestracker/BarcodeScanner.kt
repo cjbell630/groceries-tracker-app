@@ -95,7 +95,7 @@ class BarcodeScanner(context: Context) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("scanned: ${upc}") // TODO
 
-                        autofillTextField.Display()
+                        autofillTextField.Display(modifier=Modifier.padding(horizontal = 16.dp))
 
                         Spacer(modifier = Modifier.height(24.dp))
 

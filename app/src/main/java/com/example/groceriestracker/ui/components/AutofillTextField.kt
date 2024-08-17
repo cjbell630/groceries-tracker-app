@@ -16,7 +16,7 @@ class AutofillTextField<T>(val search: (String) -> List<T>, val searchableToStri
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun Display() {
+    fun Display(modifier:Modifier) {
         var dropDownExpanded by remember { mutableStateOf(false) }
 
         // Really weird code but seems to work and prevent values from getting overwritten on recompose
@@ -36,7 +36,8 @@ class AutofillTextField<T>(val search: (String) -> List<T>, val searchableToStri
 
         ExposedDropdownMenuBox( // TODO move to another file
             expanded = dropDownExpanded,
-            onExpandedChange = { dropDownExpanded = !dropDownExpanded }
+            onExpandedChange = { dropDownExpanded = !dropDownExpanded },
+            modifier = modifier
         ) {
             TextField(
                 value = selectedString,
