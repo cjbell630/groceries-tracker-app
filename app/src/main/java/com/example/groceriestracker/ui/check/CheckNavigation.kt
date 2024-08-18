@@ -4,7 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -15,7 +14,8 @@ import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
-import com.example.groceriestracker.ui.components.TopAppBar
+import com.example.groceriestracker.ui.components.DynamicTopAppBar
+import com.example.groceriestracker.ui.components.FrontPane
 
 object CheckDestinations {
     const val LIST_ROUTE = "shopping_list"
@@ -26,9 +26,7 @@ fun CheckNavGraph(
     navGraphBuilder: NavGraphBuilder,
     route: String,
     allItems: List<ProcessedItem>,
-    topAppBar: TopAppBar,
-    bottomNavBar: BottomNavBar,
-    floatingActionButton: DynamicFab,
+    frontPane: FrontPane,
 
 
     getUpcAssociation: (String) -> UpcAssociation?,
@@ -64,9 +62,9 @@ fun CheckNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            floatingActionButton.show = false
-            topAppBar.show = true
-            topAppBar.headerText = stringResource(R.string.header_app_name)
+            frontPane.fab.show = false
+            frontPane.topBar.show = true
+            frontPane.topBar.headerText = stringResource(R.string.header_app_name)
             CheckScreen(
                 allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
             )

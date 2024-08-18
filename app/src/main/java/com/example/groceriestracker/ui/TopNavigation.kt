@@ -4,7 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -15,7 +14,8 @@ import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.check.CheckNavGraph
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
-import com.example.groceriestracker.ui.components.TopAppBar
+import com.example.groceriestracker.ui.components.DynamicTopAppBar
+import com.example.groceriestracker.ui.components.FrontPane
 import com.example.groceriestracker.ui.home.HomeNavGraph
 
 object TopLevelDestinations {
@@ -29,9 +29,7 @@ fun TopNavHost(
     navController: NavHostController = rememberNavController(),
     allItems: List<ProcessedItem>,
 
-    topAppBar: TopAppBar,
-    bottomNavBar: BottomNavBar,
-    floatingActionButton: DynamicFab,
+    frontPane: FrontPane,
 
     getUpcAssociation: (String) -> UpcAssociation?,
     addUpcAssociation: (UpcAssociation) -> Unit,
@@ -60,12 +58,12 @@ fun TopNavHost(
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         HomeNavGraph(
             this@NavHost, navController, TopLevelDestinations.HOME_ROUTE, allItems,
-            topAppBar, bottomNavBar, floatingActionButton
+            frontPane
         )
 
         CheckNavGraph(
             this@NavHost, TopLevelDestinations.CHECK_ROUTE, allItems,
-            topAppBar, bottomNavBar, floatingActionButton,
+            frontPane,
             getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
         )
     }

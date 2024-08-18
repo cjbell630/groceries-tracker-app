@@ -2,16 +2,13 @@ package com.example.groceriestracker.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Receipt
 import androidx.compose.material3.*
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +23,7 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.zIndex
 import com.example.groceriestracker.R
 
-class TopAppBar(defaultShow: Boolean = true, private val navigateUp: () -> Unit = {}) {
+class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -> Unit = {}) {
     var show: Boolean = defaultShow
     var headerText: String = ""
     var showBackButton: Boolean = false

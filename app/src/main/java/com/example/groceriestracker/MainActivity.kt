@@ -25,9 +25,7 @@ import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.repository.UpcAssociationRepository
-import com.example.groceriestracker.ui.components.BottomNavBar
-import com.example.groceriestracker.ui.components.DynamicFab
-import com.example.groceriestracker.ui.components.TopAppBar
+import com.example.groceriestracker.ui.components.FrontPane
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -75,9 +73,12 @@ fun GroceriesTrackerApp(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
         /* App Bars and stuff */
+        val frontPane = FrontPane(navBackStackEntry, navController)
+        /*
         val bottomNavBar = BottomNavBar(navBackStackEntry, navController)
         val topAppBar = TopAppBar(navigateUp = navController::navigateUp)
         val floatingActionButton = DynamicFab() /*do nothing on click*/
+         */
 
         val appDatabase = AppDatabase.getDatabase(LocalContext.current)
 
@@ -155,19 +156,18 @@ fun GroceriesTrackerApp(
             topBar = {
             },
             bottomBar = {
-                bottomNavBar.Display()
+                frontPane.BottomNavBar()
             },
             floatingActionButton = {
-                floatingActionButton.Display()
+                frontPane.FloatingActionButton()
             }
         ) { innerPadding ->
             Box() {
-                topAppBar.Display()
+                frontPane.TopAppBar()
                 Column(modifier = Modifier.padding(innerPadding).zIndex(0f)) {
                     Spacer(modifier = Modifier.height(64.dp + 8.dp /*TODO fix magic number - this is height of top app bar + 8.dp*/))
                     TopNavHost(
-                        navController, allItems,
-                        topAppBar, bottomNavBar, floatingActionButton,
+                        navController, allItems, frontPane,
                         ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity, ::searchItems
                     )
                 }

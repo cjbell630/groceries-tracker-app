@@ -5,7 +5,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -17,7 +16,8 @@ import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
 import com.example.groceriestracker.ui.components.DynamicFab.Companion.ButtonModes
-import com.example.groceriestracker.ui.components.TopAppBar
+import com.example.groceriestracker.ui.components.DynamicTopAppBar
+import com.example.groceriestracker.ui.components.FrontPane
 import com.example.groceriestracker.ui.home.create.CreateScreen
 
 object HomeDestinations {
@@ -32,9 +32,7 @@ fun HomeNavGraph(
     navController: NavHostController,
     route: String,
     allItems: List<ProcessedItem>,
-    topAppBar: TopAppBar,
-    bottomNavBar: BottomNavBar,
-    floatingActionButton: DynamicFab,
+    frontPane: FrontPane
 ) {
     fun baseNavEnterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition? {
         return {
@@ -66,12 +64,12 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            floatingActionButton.show = true
-            topAppBar.show = true
-            floatingActionButton.mode = ButtonModes.Add
-            topAppBar.headerText = stringResource(R.string.header_app_name)
-            topAppBar.showBackButton = false
-            floatingActionButton.onClick = {
+            frontPane.fab.show = true
+            frontPane.topBar.show = true
+            frontPane.fab.mode = ButtonModes.Add
+            frontPane.topBar.headerText = stringResource(R.string.header_app_name)
+            frontPane.topBar.showBackButton = false
+            frontPane.fab.onClick = {
                 Log.d("HomeNavGraph", "fab clicked")
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
             }
@@ -84,13 +82,13 @@ fun HomeNavGraph(
             exitTransition = baseNavExitTransition() //TODO
         ) {
             fun setOnClick(onClick: () -> Unit) {
-                floatingActionButton.onClick = onClick
+                frontPane.fab.onClick = onClick
             }
-            floatingActionButton.mode = ButtonModes.Next
-            floatingActionButton.show = true // TODO change to next arrow (then save icon on next screen)
-            topAppBar.show = true
-            topAppBar.headerText = "Create" //TODO
-            topAppBar.showBackButton = true
+            frontPane.fab.mode = ButtonModes.Next
+            frontPane.fab.show = true // TODO change to next arrow (then save icon on next screen)
+            frontPane.topBar.show = true
+            frontPane.topBar.headerText = "Create" //TODO
+            frontPane.topBar.showBackButton = true
             // TODO hide bottom bar
             CreateScreen(::setOnClick)
         }
