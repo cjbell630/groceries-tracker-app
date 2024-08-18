@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavController) {
     val fab = DynamicFab()
     val topBar = DynamicTopAppBar(navigateUp = navController::navigateUp)
-    val bottomBar = BottomNavBar(navBackStackEntry, navController)
+    val bottomBar = DynamicBottomNavBar(navBackStackEntry, navController)
 
     @Composable
     fun FloatingActionButton() {

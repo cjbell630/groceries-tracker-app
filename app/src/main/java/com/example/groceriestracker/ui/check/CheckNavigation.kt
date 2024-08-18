@@ -12,9 +12,6 @@ import androidx.navigation.compose.navigation
 import com.example.groceriestracker.R
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
-import com.example.groceriestracker.ui.components.BottomNavBar
-import com.example.groceriestracker.ui.components.DynamicFab
-import com.example.groceriestracker.ui.components.DynamicTopAppBar
 import com.example.groceriestracker.ui.components.FrontPane
 
 object CheckDestinations {

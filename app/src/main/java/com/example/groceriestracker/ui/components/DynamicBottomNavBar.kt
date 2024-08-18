@@ -14,11 +14,10 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.groceriestracker.R
 import com.example.groceriestracker.ui.TopLevelDestinations
 
-class BottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navController: NavController) {
+class DynamicBottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navController: NavController) {
 
     /**
      * Checks whether the current route is under the provided route.
