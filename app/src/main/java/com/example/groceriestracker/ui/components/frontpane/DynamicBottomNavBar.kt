@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui.components
+package com.example.groceriestracker.ui.components.frontpane
 
 import android.util.Log
 import androidx.compose.material.icons.Icons

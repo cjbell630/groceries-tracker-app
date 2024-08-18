@@ -12,8 +12,8 @@ import androidx.navigation.compose.navigation
 import com.example.groceriestracker.R
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
-import com.example.groceriestracker.ui.components.FrontPane
-import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
+import com.example.groceriestracker.ui.components.frontpane.FrontPane
+import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setText
 
 object CheckDestinations {
     const val LIST_ROUTE = "shopping_list"

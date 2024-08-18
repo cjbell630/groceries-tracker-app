@@ -1,11 +1,8 @@
-package com.example.groceriestracker.ui.components
+package com.example.groceriestracker.ui.components.frontpane
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import com.example.groceriestracker.R
-import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
 
 class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavController) {
     val fab = DynamicFab()

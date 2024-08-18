@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui.components
+package com.example.groceriestracker.ui.components.frontpane
 
 interface FrontPaneElement {
     var isVisible: Boolean

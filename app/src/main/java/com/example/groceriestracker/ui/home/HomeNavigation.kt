@@ -13,11 +13,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.groceriestracker.R
 import com.example.groceriestracker.models.ProcessedItem
-import com.example.groceriestracker.ui.components.DynamicFab.Companion.ButtonModes
-import com.example.groceriestracker.ui.components.FrontPane
-import com.example.groceriestracker.ui.components.FrontPane.Companion.setAction
-import com.example.groceriestracker.ui.components.FrontPane.Companion.setSearch
-import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
+import com.example.groceriestracker.ui.components.frontpane.DynamicFab.Companion.ButtonModes
+import com.example.groceriestracker.ui.components.frontpane.FrontPane
+import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setAction
+import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setSearch
+import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setText
 import com.example.groceriestracker.ui.home.create.CreateScreen
 
 object HomeDestinations {

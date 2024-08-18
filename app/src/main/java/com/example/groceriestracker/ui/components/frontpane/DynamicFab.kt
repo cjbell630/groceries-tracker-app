@@ -1,8 +1,7 @@
-package com.example.groceriestracker.ui.components
+package com.example.groceriestracker.ui.components.frontpane
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.automirrored.filled.ArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.FloatingActionButton

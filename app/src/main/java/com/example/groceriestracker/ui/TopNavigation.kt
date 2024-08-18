@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.check.CheckNavGraph
-import com.example.groceriestracker.ui.components.FrontPane
+import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import com.example.groceriestracker.ui.home.HomeNavGraph
 
 object TopLevelDestinations {
