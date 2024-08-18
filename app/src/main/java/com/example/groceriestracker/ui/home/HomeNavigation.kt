@@ -81,8 +81,7 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(), // TODO
             exitTransition = baseNavExitTransition() //TODO
         ) {
-            // TODO extract string
-            frontPane.topBar.setText("Create", showBackButton = true)
+            frontPane.topBar.setText(stringResource(R.string.label_create_screen), showBackButton = true)
 
             frontPane.bottomBar.hide()
 
