@@ -1,13 +1,10 @@
 package com.example.groceriestracker.ui.components.frontpane
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.rounded.Receipt
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.groceriestracker.R
 
@@ -35,7 +33,7 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
             Box(Modifier.fillMaxWidth().zIndex(1f).semantics { isTraversalGroup = true }) {
                 when (mode) {
                     TopBarModes.Search -> BarWithSearch(
-                        modifier = Modifier.align(Alignment.TopCenter).semantics { traversalIndex = 0f }
+                        modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter).semantics { traversalIndex = 0f }
                     )
 
                     TopBarModes.Normal -> NormalBar()
@@ -53,20 +51,11 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
             },
             navigationIcon = {
                 if (showBackButton) {
-                    IconButton(onClick = navigateUp) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back button" // TODO localize
-                        )
-                    }
+                    BackButton(navigateUp)
                 }
             },
             actions = {
-                IconButton(onClick = {
-
-                }) {
-                    Icon(Icons.Rounded.Receipt, contentDescription = "Open shopping list")
-                }
+                SettingsButton()
             }
         )
     }
@@ -76,8 +65,9 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
     fun BarWithSearch(modifier: Modifier) {
         var text by rememberSaveable { mutableStateOf("") }
         var expanded by rememberSaveable { mutableStateOf(false) }
+        // TODO add transitions
         SearchBar(
-            modifier = modifier,
+            modifier = if (expanded) modifier else modifier.padding(horizontal = 8.dp),
 
             /* 1.3?
             inputField = {
@@ -97,11 +87,25 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
             query = text,
             onQueryChange = { text = it },
             onSearch = { expanded = false },
-            placeholder = { Text(stringResource(R.string.item_search_hint)) },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.item_search_hint)
+                )
+            },
             active = expanded,
             onActiveChange = { active: Boolean -> expanded = active },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-            trailingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
+            leadingIcon = {
+                if (expanded) {
+                    BackButton { expanded = false }
+                } else {
+                    Icon(Icons.Default.Search, contentDescription = null)
+                }
+            },
+            trailingIcon = {
+                if (!expanded) {
+                    SettingsButton()
+                }
+            },
         ) {
             /*this appears when expanded*/
             Column() {
@@ -112,9 +116,27 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
     }
 
     companion object {
-
         enum class TopBarModes {
             Search, Normal
+        }
+
+        @Composable
+        fun SettingsButton() {
+            IconButton(onClick = {
+
+            }) {
+                Icon(Icons.Default.Settings, contentDescription = null)
+            }
+        }
+
+        @Composable
+        fun BackButton(onClick: () -> Unit) {
+            IconButton(onClick = onClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = "Back button" // TODO localize
+                )
+            }
         }
     }
 }
