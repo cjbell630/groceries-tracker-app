@@ -16,6 +16,8 @@ import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.DynamicFab.Companion.ButtonModes
 import com.example.groceriestracker.ui.components.FrontPane
 import com.example.groceriestracker.ui.components.FrontPane.Companion.setAction
+import com.example.groceriestracker.ui.components.FrontPane.Companion.setSearch
+import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
 import com.example.groceriestracker.ui.home.create.CreateScreen
 
 object HomeDestinations {
@@ -62,14 +64,13 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
+            frontPane.topBar.setSearch()
+
             frontPane.fab.setAction(ButtonModes.Add) {
                 Log.d("HomeNavGraph", "fab clicked")
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
             }
 
-            frontPane.topBar.show = true
-            frontPane.topBar.headerText = stringResource(R.string.header_app_name)
-            frontPane.topBar.showBackButton = false
             HomeScreen(allItems)
         }
 
@@ -78,9 +79,8 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(), // TODO
             exitTransition = baseNavExitTransition() //TODO
         ) {
-            frontPane.topBar.show = true
-            frontPane.topBar.headerText = "Create" //TODO
-            frontPane.topBar.showBackButton = true
+            // TODO extract string
+            frontPane.topBar.setText("Create", showBackButton = true)
 
             // TODO hide bottom bar
 

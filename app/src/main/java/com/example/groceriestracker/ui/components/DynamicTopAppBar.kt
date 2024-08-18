@@ -27,47 +27,18 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
     var show: Boolean = defaultShow
     var headerText: String = ""
     var showBackButton: Boolean = false
+    var mode: TopBarModes = TopBarModes.Normal
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Display() {
         if (show) {
-            // TODO on expand, change search icon to back button, hide settings button
             Box(Modifier.fillMaxWidth().zIndex(1f).semantics { isTraversalGroup = true }) {
-                var text by rememberSaveable { mutableStateOf("") }
-                var expanded by rememberSaveable { mutableStateOf(false) }
-                SearchBar(
-                    modifier = Modifier.align(Alignment.TopCenter)/*.zIndex(if (expanded) 1f else 0f)*/
-                        .semantics { traversalIndex = 0f },
+                when (mode) {
+                    TopBarModes.Search -> BarWithSearch(
+                        modifier = Modifier.align(Alignment.TopCenter).semantics { traversalIndex = 0f }
+                    )
 
-                    /* 1.3?
-                    inputField = {
-                        SearchBarDefaults.InputField(
-                            query = text,
-                            onQueryChange = { text = it },
-                            onSearch = { expanded = false },
-                            expanded = expanded,
-                            onExpandedChange = { expanded = it },
-                            placeholder = { Text("Hinted search text") },
-                            loadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-                        )
-                    },
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it }*/
-                    query = text,
-                    onQueryChange = { text = it },
-                    onSearch = { expanded = false },
-                    placeholder = { Text(stringResource(R.string.item_search_hint)) },
-                    active = expanded,
-                    onActiveChange = { active: Boolean -> expanded = active },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                    trailingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
-                ) {
-                    /*this appears when expanded*/
-                    Column() {
-                        // TODO display content
-                    }
+                    TopBarModes.Normal -> NormalBar()
                 }
             }
         }
@@ -75,30 +46,75 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun DisplayWithoutSearchBar() {
-        if (show) {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(headerText)
-                },
-                navigationIcon = {
-                    if (showBackButton) {
-                        IconButton(onClick = navigateUp) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                                contentDescription = "Back button" // TODO localize
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(Icons.Rounded.Receipt, contentDescription = "Open shopping list")
+    fun NormalBar() {
+        CenterAlignedTopAppBar(
+            title = {
+                Text(headerText)
+            },
+            navigationIcon = {
+                if (showBackButton) {
+                    IconButton(onClick = navigateUp) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = "Back button" // TODO localize
+                        )
                     }
                 }
-            )
+            },
+            actions = {
+                IconButton(onClick = {
+
+                }) {
+                    Icon(Icons.Rounded.Receipt, contentDescription = "Open shopping list")
+                }
+            }
+        )
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun BarWithSearch(modifier: Modifier) {
+        var text by rememberSaveable { mutableStateOf("") }
+        var expanded by rememberSaveable { mutableStateOf(false) }
+        SearchBar(
+            modifier = modifier,
+
+            /* 1.3?
+            inputField = {
+                SearchBarDefaults.InputField(
+                    query = text,
+                    onQueryChange = { text = it },
+                    onSearch = { expanded = false },
+                    expanded = expanded,
+                    onExpandedChange = { expanded = it },
+                    placeholder = { Text("Hinted search text") },
+                    loadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                    trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+                )
+            },
+            expanded = expanded,
+            onExpandedChange = { expanded = it }*/
+            query = text,
+            onQueryChange = { text = it },
+            onSearch = { expanded = false },
+            placeholder = { Text(stringResource(R.string.item_search_hint)) },
+            active = expanded,
+            onActiveChange = { active: Boolean -> expanded = active },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+            trailingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
+        ) {
+            /*this appears when expanded*/
+            Column() {
+                // TODO display content
+            }
+        }
+        // TODO on expand, change search icon to back button, hide settings button
+    }
+
+    companion object {
+
+        enum class TopBarModes {
+            Search, Normal
         }
     }
 }

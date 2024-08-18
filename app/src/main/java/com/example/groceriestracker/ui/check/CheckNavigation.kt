@@ -14,6 +14,7 @@ import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.FrontPane
 import com.example.groceriestracker.ui.components.FrontPane.Companion.hide
+import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
 
 object CheckDestinations {
     const val LIST_ROUTE = "shopping_list"
@@ -60,10 +61,9 @@ fun CheckNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            frontPane.fab.hide()
+            frontPane.topBar.setText(stringResource(R.string.header_app_name))
 
-            frontPane.topBar.show = true
-            frontPane.topBar.headerText = stringResource(R.string.header_app_name)
+            frontPane.fab.hide()
 
             CheckScreen(
                 allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems

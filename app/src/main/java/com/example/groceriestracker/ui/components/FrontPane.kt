@@ -1,8 +1,11 @@
 package com.example.groceriestracker.ui.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import com.example.groceriestracker.R
+import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
 
 class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavController) {
     val fab = DynamicFab()
@@ -25,6 +28,7 @@ class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavControl
     }
 
     companion object {
+        /* FAB */
         fun DynamicFab.setAction(
             mode: DynamicFab.Companion.ButtonModes = this.mode,
             onClick: () -> Unit = this.onClick
@@ -39,6 +43,21 @@ class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavControl
             this.show = false
         }
 
+        /* Top Bar */
+        fun DynamicTopAppBar.setText(text: String, showBackButton: Boolean = this.showBackButton) {
+            this.showBackButton = showBackButton
+            this.mode = DynamicTopAppBar.Companion.TopBarModes.Normal
+            this.show = true
+            this.headerText = text
+        }
 
+        fun DynamicTopAppBar.setSearch() {
+            this.mode = DynamicTopAppBar.Companion.TopBarModes.Search
+            this.show = true
+        }
+
+        fun DynamicTopAppBar.hide() {
+            this.show = false
+        }
     }
 }
