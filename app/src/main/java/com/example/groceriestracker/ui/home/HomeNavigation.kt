@@ -16,6 +16,7 @@ import com.example.groceriestracker.R
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.BottomNavBar
 import com.example.groceriestracker.ui.components.DynamicFab
+import com.example.groceriestracker.ui.components.DynamicFab.Companion.ButtonModes
 import com.example.groceriestracker.ui.components.TopAppBar
 import com.example.groceriestracker.ui.home.create.CreateScreen
 
@@ -67,6 +68,7 @@ fun HomeNavGraph(
         ) {
             floatingActionButton.show = true
             topAppBar.show = true
+            floatingActionButton.mode = ButtonModes.Add
             topAppBar.headerText = stringResource(R.string.header_app_name)
             topAppBar.showBackButton = false
             floatingActionButton.onClick = {
@@ -81,12 +83,16 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(), // TODO
             exitTransition = baseNavExitTransition() //TODO
         ) {
+            fun setOnClick(onClick: () -> Unit) {
+                floatingActionButton.onClick = onClick
+            }
+            floatingActionButton.mode = ButtonModes.Next
             floatingActionButton.show = true // TODO change to next arrow (then save icon on next screen)
             topAppBar.show = true
             topAppBar.headerText = "Create" //TODO
             topAppBar.showBackButton = true
             // TODO hide bottom bar
-            CreateScreen()
+            CreateScreen(::setOnClick)
         }
     }
 }
