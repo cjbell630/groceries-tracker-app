@@ -30,7 +30,6 @@ fun HomeNavGraph(
     navGraphBuilder: NavGraphBuilder,
     navController: NavHostController,
     route: String,
-    innerPadding: PaddingValues,
     allItems: List<ProcessedItem>,
     topAppBar: TopAppBar,
     bottomNavBar: BottomNavBar,
@@ -74,7 +73,7 @@ fun HomeNavGraph(
                 Log.d("HomeNavGraph", "fab clicked")
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
             }
-            HomeScreen(innerPadding, allItems)
+            HomeScreen(allItems)
         }
 
         composable(
@@ -87,7 +86,7 @@ fun HomeNavGraph(
             topAppBar.headerText = "Create" //TODO
             topAppBar.showBackButton = true
             // TODO hide bottom bar
-            CreateScreen(innerPadding)
+            CreateScreen()
         }
     }
 }

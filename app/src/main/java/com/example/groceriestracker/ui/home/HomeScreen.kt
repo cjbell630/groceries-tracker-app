@@ -15,17 +15,12 @@ import androidx.compose.ui.zIndex
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.ItemCard
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(innerPadding: PaddingValues, processedItems: List<ProcessedItem>){
-    Column(
-        modifier = Modifier
-            .padding(innerPadding)/*.padding(top= SearchBarDefaults.InputFieldHeight)*/.zIndex(0f),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
+fun HomeScreen(processedItems: List<ProcessedItem>) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         LazyColumn {
-            items(processedItems.sortedBy {
-                item -> item.estimatedTimeRemaining // TODO does this work?
+            items(processedItems.sortedBy { item ->
+                item.estimatedTimeRemaining // TODO does this work?
             }) { processedItem: ProcessedItem ->
                 ItemCard(processedItem)
             }

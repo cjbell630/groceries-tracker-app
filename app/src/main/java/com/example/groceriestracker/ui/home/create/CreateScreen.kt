@@ -10,11 +10,9 @@ import com.example.groceriestracker.models.Preset
 import com.example.groceriestracker.ui.components.AutofillTextField
 
 @Composable
-fun CreateScreen(innerPadding: PaddingValues) {
+fun CreateScreen() {
     // TODO headers and visuals and stuff
-    Column(
-        modifier = Modifier.padding(innerPadding)
-    ) {
+    Column() {
         val autofillTextField = AutofillTextField<Preset>(Preset::searchByAlias) { preset -> preset?.name ?: "null" }
         autofillTextField.Display(modifier = Modifier.padding(horizontal = 16.dp))
     }

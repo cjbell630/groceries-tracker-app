@@ -22,7 +22,6 @@ import com.example.groceriestracker.ui.components.ItemCard
 
 @Composable
 fun CheckScreen(
-    innerPadding: PaddingValues,
     processedItems: List<ProcessedItem>,
     getUpcAssociation: (String) -> UpcAssociation?,
     addUpcAssociation: (UpcAssociation) -> Unit,
@@ -31,11 +30,7 @@ fun CheckScreen(
 ) {
     val scanner = BarcodeScanner(LocalContext.current)
 
-    Column(
-        modifier = Modifier
-            .padding(innerPadding),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         BarcodeDialog(scanner, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems)
 
         ElevatedButton(onClick = { scanner.scanBarcode() }) {

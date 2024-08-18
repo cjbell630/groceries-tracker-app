@@ -8,4 +8,5 @@
     <string name="label_item_bread">Bread</string>
     <string name="label_item_toothpaste">Toothpaste</string>
     <string name="scan_bulk">Scan bulk</string>
+    <string name="item_search_hint">Hinted search text</string>
 </resources>

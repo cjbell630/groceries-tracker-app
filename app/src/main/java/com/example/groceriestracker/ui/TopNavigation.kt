@@ -27,7 +27,6 @@ object TopLevelDestinations {
 @Composable
 fun TopNavHost(
     navController: NavHostController = rememberNavController(),
-    innerPadding: PaddingValues,
     allItems: List<ProcessedItem>,
 
     topAppBar: TopAppBar,
@@ -60,12 +59,12 @@ fun TopNavHost(
 
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         HomeNavGraph(
-            this@NavHost, navController,TopLevelDestinations.HOME_ROUTE, innerPadding, allItems,
+            this@NavHost, navController, TopLevelDestinations.HOME_ROUTE, allItems,
             topAppBar, bottomNavBar, floatingActionButton
         )
 
         CheckNavGraph(
-            this@NavHost, TopLevelDestinations.CHECK_ROUTE, innerPadding, allItems,
+            this@NavHost, TopLevelDestinations.CHECK_ROUTE, allItems,
             topAppBar, bottomNavBar, floatingActionButton,
             getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
         )

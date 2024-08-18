@@ -25,7 +25,6 @@ object CheckDestinations {
 fun CheckNavGraph(
     navGraphBuilder: NavGraphBuilder,
     route: String,
-    innerPadding: PaddingValues,
     allItems: List<ProcessedItem>,
     topAppBar: TopAppBar,
     bottomNavBar: BottomNavBar,
@@ -69,7 +68,7 @@ fun CheckNavGraph(
             topAppBar.show = true
             topAppBar.headerText = stringResource(R.string.header_app_name)
             CheckScreen(
-                innerPadding, allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
+                allItems, getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
             )
         }
     }
