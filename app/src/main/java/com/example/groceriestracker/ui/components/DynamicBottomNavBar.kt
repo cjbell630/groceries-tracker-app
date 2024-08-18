@@ -17,7 +17,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.groceriestracker.R
 import com.example.groceriestracker.ui.TopLevelDestinations
 
-class DynamicBottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navController: NavController) {
+class DynamicBottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navController: NavController) :
+    FrontPaneElement {
+    override var isVisible: Boolean = true
 
     /**
      * Checks whether the current route is under the provided route.
@@ -34,59 +36,60 @@ class DynamicBottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val
 
     @Composable
     fun Display() {
+        if (isVisible) {
+            NavigationBar() {
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Home,
+                            contentDescription = stringResource(R.string.label_home)
 
-        NavigationBar() {
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        Icons.Rounded.Home,
-                        contentDescription = stringResource(R.string.label_home)
-
-                    )
-                },
-                label = { Text(stringResource(R.string.label_home)) },
-                selected = navBackStackEntry?.isUnder(TopLevelDestinations.HOME_ROUTE) ?: false,
-                onClick = {
-                    navController.navigate(TopLevelDestinations.HOME_ROUTE) {
-                        /*TODO fix back button behavior on parallel navigation
-                        popUpTo(TopLevelDestinations.HOME_ROUTE){
-                            inclusive=true
-                            saveState=true
+                        )
+                    },
+                    label = { Text(stringResource(R.string.label_home)) },
+                    selected = navBackStackEntry?.isUnder(TopLevelDestinations.HOME_ROUTE) ?: false,
+                    onClick = {
+                        navController.navigate(TopLevelDestinations.HOME_ROUTE) {
+                            /*TODO fix back button behavior on parallel navigation
+                            popUpTo(TopLevelDestinations.HOME_ROUTE){
+                                inclusive=true
+                                saveState=true
+                            }
+                            launchSingleTop = true
+                            restoreState = true*/
                         }
-                        launchSingleTop = true
-                        restoreState = true*/
+                        Log.d(
+                            "BottomNavBar",
+                            "navigating to home; full route: ${navBackStackEntry?.destination?.hierarchy?.joinToString { navDestination: NavDestination -> navDestination.route ?: "null" }}"
+                        )
                     }
-                    Log.d(
-                        "BottomNavBar",
-                        "navigating to home; full route: ${navBackStackEntry?.destination?.hierarchy?.joinToString { navDestination: NavDestination -> navDestination.route ?: "null" }}"
-                    )
-                }
-            )
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        Icons.Rounded.Checklist,
-                        contentDescription = stringResource(R.string.label_shopping_list)
-                    )
-                },
-                label = { Text(stringResource(R.string.label_shopping_list)) },
-                selected = navBackStackEntry?.isUnder(TopLevelDestinations.CHECK_ROUTE) ?: false,
-                onClick = {
-                    navController.navigate(TopLevelDestinations.CHECK_ROUTE) {
-                        /* TODO fix back button behavior on parallel navigation
-                        popUpTo(TopLevelDestinations.CHECK_ROUTE){
-                            inclusive=true
-                            saveState=true
+                )
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Checklist,
+                            contentDescription = stringResource(R.string.label_shopping_list)
+                        )
+                    },
+                    label = { Text(stringResource(R.string.label_shopping_list)) },
+                    selected = navBackStackEntry?.isUnder(TopLevelDestinations.CHECK_ROUTE) ?: false,
+                    onClick = {
+                        navController.navigate(TopLevelDestinations.CHECK_ROUTE) {
+                            /* TODO fix back button behavior on parallel navigation
+                            popUpTo(TopLevelDestinations.CHECK_ROUTE){
+                                inclusive=true
+                                saveState=true
+                            }
+                            launchSingleTop = true
+                            restoreState = true*/
                         }
-                        launchSingleTop = true
-                        restoreState = true*/
+                        Log.d(
+                            "BottomNavBar",
+                            "navigating to home; full route: ${navBackStackEntry?.destination?.hierarchy?.joinToString { navDestination: NavDestination -> navDestination.route ?: "null" }}"
+                        )
                     }
-                    Log.d(
-                        "BottomNavBar",
-                        "navigating to home; full route: ${navBackStackEntry?.destination?.hierarchy?.joinToString { navDestination: NavDestination -> navDestination.route ?: "null" }}"
-                    )
-                }
-            )
+                )
+            }
         }
     }
 }

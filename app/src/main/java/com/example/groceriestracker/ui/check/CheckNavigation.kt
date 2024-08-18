@@ -13,7 +13,6 @@ import com.example.groceriestracker.R
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.FrontPane
-import com.example.groceriestracker.ui.components.FrontPane.Companion.hide
 import com.example.groceriestracker.ui.components.FrontPane.Companion.setText
 
 object CheckDestinations {
@@ -62,6 +61,8 @@ fun CheckNavGraph(
             exitTransition = baseNavExitTransition()
         ) {
             frontPane.topBar.setText(stringResource(R.string.header_app_name))
+
+            frontPane.bottomBar.show()
 
             frontPane.fab.hide()
 

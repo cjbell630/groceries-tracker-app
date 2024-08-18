@@ -9,9 +9,10 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 
-class DynamicFab(defaultOnClick: () -> Unit = {}, defaultShow: Boolean = false) {
+class DynamicFab(defaultOnClick: () -> Unit = {}, defaultShow: Boolean = false) : FrontPaneElement {
+    override var isVisible: Boolean = defaultShow
+
     var onClick: () -> Unit = defaultOnClick
-    var show: Boolean = defaultShow
     var mode: ButtonModes = ButtonModes.Add
 
     @Composable
@@ -25,7 +26,7 @@ class DynamicFab(defaultOnClick: () -> Unit = {}, defaultShow: Boolean = false) 
 
     @Composable
     fun Display() {
-        if (show) {
+        if (isVisible) {
             FloatingActionButton(onClick = onClick) {
                 GetIcon()
             }

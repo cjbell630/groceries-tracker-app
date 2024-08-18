@@ -33,31 +33,23 @@ class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavControl
             mode: DynamicFab.Companion.ButtonModes = this.mode,
             onClick: () -> Unit = this.onClick
         ) {
-            this.show = true
+            this.show()
             // TODO a little wasteful but it's fine
             this.mode = mode
             this.onClick = onClick
-        }
-
-        fun DynamicFab.hide() {
-            this.show = false
         }
 
         /* Top Bar */
         fun DynamicTopAppBar.setText(text: String, showBackButton: Boolean = this.showBackButton) {
             this.showBackButton = showBackButton
             this.mode = DynamicTopAppBar.Companion.TopBarModes.Normal
-            this.show = true
+            this.show()
             this.headerText = text
         }
 
         fun DynamicTopAppBar.setSearch() {
             this.mode = DynamicTopAppBar.Companion.TopBarModes.Search
-            this.show = true
-        }
-
-        fun DynamicTopAppBar.hide() {
-            this.show = false
+            this.show()
         }
     }
 }

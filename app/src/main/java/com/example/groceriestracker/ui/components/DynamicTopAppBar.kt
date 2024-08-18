@@ -23,15 +23,15 @@ import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.zIndex
 import com.example.groceriestracker.R
 
-class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -> Unit = {}) {
-    var show: Boolean = defaultShow
+class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -> Unit = {}) : FrontPaneElement {
+    override var isVisible: Boolean = defaultShow
     var headerText: String = ""
     var showBackButton: Boolean = false
     var mode: TopBarModes = TopBarModes.Normal
 
     @Composable
     fun Display() {
-        if (show) {
+        if (isVisible) {
             Box(Modifier.fillMaxWidth().zIndex(1f).semantics { isTraversalGroup = true }) {
                 when (mode) {
                     TopBarModes.Search -> BarWithSearch(

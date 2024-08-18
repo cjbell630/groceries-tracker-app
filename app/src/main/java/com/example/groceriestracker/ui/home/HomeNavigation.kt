@@ -66,6 +66,8 @@ fun HomeNavGraph(
         ) {
             frontPane.topBar.setSearch()
 
+            frontPane.bottomBar.show()
+
             frontPane.fab.setAction(ButtonModes.Add) {
                 Log.d("HomeNavGraph", "fab clicked")
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
@@ -82,7 +84,7 @@ fun HomeNavGraph(
             // TODO extract string
             frontPane.topBar.setText("Create", showBackButton = true)
 
-            // TODO hide bottom bar
+            frontPane.bottomBar.hide()
 
             frontPane.fab.setAction(ButtonModes.Next) // TODO change to save icon on next screen
             CreateScreen { onClick ->
