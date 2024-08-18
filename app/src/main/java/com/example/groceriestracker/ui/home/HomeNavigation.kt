@@ -15,6 +15,7 @@ import com.example.groceriestracker.R
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.DynamicFab.Companion.ButtonModes
 import com.example.groceriestracker.ui.components.FrontPane
+import com.example.groceriestracker.ui.components.FrontPane.Companion.setAction
 import com.example.groceriestracker.ui.home.create.CreateScreen
 
 object HomeDestinations {
@@ -61,15 +62,14 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            frontPane.fab.show = true
-            frontPane.topBar.show = true
-            frontPane.fab.mode = ButtonModes.Add
-            frontPane.topBar.headerText = stringResource(R.string.header_app_name)
-            frontPane.topBar.showBackButton = false
-            frontPane.fab.onClick = {
+            frontPane.fab.setAction(ButtonModes.Add) {
                 Log.d("HomeNavGraph", "fab clicked")
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
             }
+
+            frontPane.topBar.show = true
+            frontPane.topBar.headerText = stringResource(R.string.header_app_name)
+            frontPane.topBar.showBackButton = false
             HomeScreen(allItems)
         }
 
@@ -78,16 +78,16 @@ fun HomeNavGraph(
             enterTransition = baseNavEnterTransition(), // TODO
             exitTransition = baseNavExitTransition() //TODO
         ) {
-            fun setOnClick(onClick: () -> Unit) {
-                frontPane.fab.onClick = onClick
-            }
-            frontPane.fab.mode = ButtonModes.Next
-            frontPane.fab.show = true // TODO change to next arrow (then save icon on next screen)
             frontPane.topBar.show = true
             frontPane.topBar.headerText = "Create" //TODO
             frontPane.topBar.showBackButton = true
+
             // TODO hide bottom bar
-            CreateScreen(::setOnClick)
+
+            frontPane.fab.setAction(ButtonModes.Next) // TODO change to save icon on next screen
+            CreateScreen { onClick ->
+                frontPane.fab.setAction(onClick = onClick)
+            }
         }
     }
 }

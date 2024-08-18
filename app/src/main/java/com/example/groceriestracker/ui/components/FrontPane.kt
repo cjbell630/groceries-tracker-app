@@ -23,4 +23,22 @@ class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavControl
     fun BottomNavBar() {
         bottomBar.Display()
     }
+
+    companion object {
+        fun DynamicFab.setAction(
+            mode: DynamicFab.Companion.ButtonModes = this.mode,
+            onClick: () -> Unit = this.onClick
+        ) {
+            this.show = true
+            // TODO a little wasteful but it's fine
+            this.mode = mode
+            this.onClick = onClick
+        }
+
+        fun DynamicFab.hide() {
+            this.show = false
+        }
+
+
+    }
 }
