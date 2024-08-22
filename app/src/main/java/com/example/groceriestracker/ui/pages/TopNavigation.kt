@@ -14,11 +14,12 @@ import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.pages.check.CheckNavGraph
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import com.example.groceriestracker.ui.pages.home.HomeNavGraph
+import com.example.groceriestracker.ui.pages.settings.SettingsNavGraph
 
 object TopLevelDestinations {
     const val HOME_ROUTE = "home"
     const val CHECK_ROUTE = "check"
-
+    const val SETTINGS_ROUTE = "settings"
 }
 
 @Composable
@@ -63,5 +64,7 @@ fun TopNavHost(
             frontPane,
             getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
         )
+
+        SettingsNavGraph(this@NavHost, navController, TopLevelDestinations.SETTINGS_ROUTE, frontPane)
     }
 }
