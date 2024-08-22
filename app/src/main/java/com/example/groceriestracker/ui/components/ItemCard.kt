@@ -16,8 +16,9 @@ val THINGY = 8.dp
 val THINGY_SP = 8.sp
 
 @Composable
-fun ItemCard(item: ProcessedItem) {
+fun ItemCard(item: ProcessedItem, onClick: () -> Unit={}) {
     ElevatedCard(
+        onClick = onClick,
         Modifier.padding(horizontal = 2 * THINGY, vertical = 1 * THINGY)
     ) {
         Row(
@@ -54,7 +55,7 @@ fun ItemCard(item: ProcessedItem) {
                         // use elvis
                         ((Date().time - item.history.lastUpdate?.time!!) /
                                 (item.history.estimatedExpiryTime - item.history.lastUpdate?.time!!)
-                        ).toFloat()
+                                ).toFloat()
                     },
                     color = Color.Red,
                     trackColor = Color.Green,
