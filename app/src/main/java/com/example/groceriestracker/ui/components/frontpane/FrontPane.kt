@@ -1,12 +1,16 @@
 package com.example.groceriestracker.ui.components.frontpane
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import com.example.groceriestracker.ui.pages.TopLevelDestinations
 
 class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavController) {
     val fab = DynamicFab()
-    val topBar = DynamicTopAppBar(navigateUp = navController::navigateUp)
+    val topBar = DynamicTopAppBar(
+        navigateUp = navController::navigateUp,
+        navSettings = { Log.d("FrontPane", "settings button clicked"); navController.navigate(TopLevelDestinations.SETTINGS_ROUTE) })
     val bottomBar = DynamicBottomNavBar(navBackStackEntry, navController)
 
     @Composable

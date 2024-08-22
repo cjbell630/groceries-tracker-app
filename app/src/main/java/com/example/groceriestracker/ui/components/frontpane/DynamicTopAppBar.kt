@@ -1,5 +1,6 @@
 package com.example.groceriestracker.ui.components.frontpane
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -21,7 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.groceriestracker.R
 
-class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -> Unit = {}) : FrontPaneElement {
+class DynamicTopAppBar(
+    defaultShow: Boolean = true,
+    private val navigateUp: () -> Unit = {},
+    private val navSettings: () -> Unit = {}
+) : FrontPaneElement {
     override var isVisible: Boolean = defaultShow
     var headerText: String = ""
     var showBackButton: Boolean = false
@@ -55,7 +60,7 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
                 }
             },
             actions = {
-                SettingsButton()
+                SettingsButton(navSettings = navSettings)
             }
         )
     }
@@ -103,7 +108,7 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
             },
             trailingIcon = {
                 if (!expanded) {
-                    SettingsButton()
+                    SettingsButton(navSettings = navSettings)
                 }
             },
         ) {
@@ -121,10 +126,8 @@ class DynamicTopAppBar(defaultShow: Boolean = true, private val navigateUp: () -
         }
 
         @Composable
-        fun SettingsButton() {
-            IconButton(onClick = {
-
-            }) {
+        fun SettingsButton(navSettings: () -> Unit) {
+            IconButton(onClick = navSettings) {
                 Icon(Icons.Default.Settings, contentDescription = null)
             }
         }
