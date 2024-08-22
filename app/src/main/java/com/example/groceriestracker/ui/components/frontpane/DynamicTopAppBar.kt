@@ -30,6 +30,7 @@ class DynamicTopAppBar(
     override var isVisible: Boolean = defaultShow
     var headerText: String = ""
     var showBackButton: Boolean = false
+    var showSettingsButton: Boolean = true
     var mode: TopBarModes = TopBarModes.Normal
 
     @Composable
@@ -60,7 +61,9 @@ class DynamicTopAppBar(
                 }
             },
             actions = {
-                SettingsButton(navSettings = navSettings)
+                if (showSettingsButton) {
+                    SettingsButton(navSettings = navSettings)
+                }
             }
         )
     }

@@ -54,7 +54,7 @@ fun SettingsNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            frontPane.topBar.setText("Settings", showBackButton = true)
+            frontPane.topBar.setText("Settings", showBackButton = true, showSettingsButton = false)
 
             frontPane.bottomBar.hide()
 

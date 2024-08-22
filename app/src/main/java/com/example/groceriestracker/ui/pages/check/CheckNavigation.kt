@@ -60,7 +60,11 @@ fun CheckNavGraph(
             enterTransition = baseNavEnterTransition(),
             exitTransition = baseNavExitTransition()
         ) {
-            frontPane.topBar.setText(stringResource(R.string.header_app_name))
+            frontPane.topBar.setText(
+                stringResource(R.string.header_app_name),
+                showBackButton = false,
+                showSettingsButton = true
+            )
 
             frontPane.bottomBar.show()
 

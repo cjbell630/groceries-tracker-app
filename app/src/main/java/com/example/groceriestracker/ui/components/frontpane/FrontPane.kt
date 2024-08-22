@@ -10,7 +10,12 @@ class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavControl
     val fab = DynamicFab()
     val topBar = DynamicTopAppBar(
         navigateUp = navController::navigateUp,
-        navSettings = { Log.d("FrontPane", "settings button clicked"); navController.navigate(TopLevelDestinations.SETTINGS_ROUTE) })
+        navSettings = {
+            Log.d(
+                "FrontPane",
+                "settings button clicked"
+            ); navController.navigate(TopLevelDestinations.SETTINGS_ROUTE)
+        })
     val bottomBar = DynamicBottomNavBar(navBackStackEntry, navController)
 
     @Composable
@@ -41,8 +46,13 @@ class FrontPane(navBackStackEntry: NavBackStackEntry?, navController: NavControl
         }
 
         /* Top Bar */
-        fun DynamicTopAppBar.setText(text: String, showBackButton: Boolean = this.showBackButton) {
+        fun DynamicTopAppBar.setText(
+            text: String,
+            showBackButton: Boolean = this.showBackButton,
+            showSettingsButton: Boolean = this.showSettingsButton
+        ) {
             this.showBackButton = showBackButton
+            this.showSettingsButton = showSettingsButton
             this.mode = DynamicTopAppBar.Companion.TopBarModes.Normal
             this.show()
             this.headerText = text
