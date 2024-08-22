@@ -83,11 +83,9 @@ fun HomeNavGraph(
 
             frontPane.bottomBar.hide()
 
-            frontPane.fab.setAction(ButtonModes.Next) // TODO change to save icon on next screen
+            frontPane.fab.setAction(ButtonModes.Next)
 
-            CreateScreen { onClick ->
-                frontPane.fab.setAction(onClick = onClick)
-            }
+            CreateScreen(frontPane)
         }
     }
 }

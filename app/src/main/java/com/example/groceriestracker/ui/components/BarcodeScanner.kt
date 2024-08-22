@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import com.example.groceriestracker.models.Preset
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -79,7 +80,7 @@ class BarcodeScanner(context: Context) {
             onCancel: () -> Unit,
             onSuccessfulSubmit: (Int, Double) -> Unit
         ) {
-            val autofillTextField = AutofillTextField(searchItems) { item -> item?.name ?: "null" }
+
 
             Log.d("AssociateUPCDialog", "Launching")
             BasicAlertDialog(
@@ -94,7 +95,19 @@ class BarcodeScanner(context: Context) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("scanned: ${upc}") // TODO
 
-                        autofillTextField.Display(modifier=Modifier.padding(horizontal = 16.dp))
+
+                        var name by remember { mutableStateOf("") }
+                        var item: ProcessedItem? by remember { mutableStateOf(null) }
+
+                        AutofillTextField(
+                            search = searchItems,
+                            searchableToString = { searchable -> searchable?.name ?: "null" },
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            text = name,
+                            onTextChange = { name = it },
+                            selection = item,
+                            onSelectionChange = { item = it }
+                        )
 
                         Spacer(modifier = Modifier.height(24.dp))
 
@@ -106,8 +119,11 @@ class BarcodeScanner(context: Context) {
                         }
                         TextButton(
                             onClick = {
-                                if (autofillTextField.isValid()) {
-                                    onSuccessfulSubmit(autofillTextField.selectedResult?.databaseEntryUID!!, 15.0/*TODO*/)
+                                if (name == item?.name) {
+                                    onSuccessfulSubmit(
+                                        item?.databaseEntryUID!!,
+                                        15.0/*TODO*/
+                                    )
                                 }
                             },
                             modifier = Modifier.align(Alignment.Start)
