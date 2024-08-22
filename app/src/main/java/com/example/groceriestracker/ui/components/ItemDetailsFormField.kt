@@ -19,7 +19,8 @@ fun ItemDetailsFormField(presetVal: String?) {
             onValueChange = {
                 text = it
             },
-            label = { Text("label") }
+            placeholder = {Text("placeholder text internal")},
+            label = { Text("label text") }
         )
         if (text != presetVal) { // show modified icon if modified
             Icon(Icons.Default.Star, contentDescription = "modified", tint = Color.Yellow)

@@ -18,6 +18,7 @@ import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setAction
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setSearch
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setText
+import com.example.groceriestracker.ui.pages.TopLevelDestinations
 import com.example.groceriestracker.ui.pages.home.create.CreateScreen
 
 object HomeDestinations {
@@ -85,7 +86,7 @@ fun HomeNavGraph(
 
             frontPane.fab.setAction(ButtonModes.Next)
 
-            CreateScreen(frontPane)
+            CreateScreen(frontPane, goHome={navController.navigate(TopLevelDestinations.HOME_ROUTE)})
         }
     }
 }

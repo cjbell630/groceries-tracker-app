@@ -20,20 +20,9 @@ enum class CreationState {
 }
 
 @Composable
-fun CreateScreen(frontPane: FrontPane) {
+fun CreateScreen(frontPane: FrontPane, goHome:()->Unit) {
     var state by remember { mutableStateOf(CreationState.NAME) }
-    val item: Item by remember {
-        mutableStateOf(
-            Item(
-                name = null,
-                unit = null,
-                iconId = null,
-                statusEvents = emptyList()
-            )
-        )
-    }
-
-    val preset: Preset? by remember { mutableStateOf(null) }
+    var preset: Preset? by remember { mutableStateOf(null) }
 
     @Composable
     fun setNameScreen() {
@@ -41,7 +30,6 @@ fun CreateScreen(frontPane: FrontPane) {
         Column() {
             // TODO change this to search bar?
             var name by remember { mutableStateOf("") }
-            var preset: Preset? by remember { mutableStateOf(null) }
 
             frontPane.fab.setAction(mode = ButtonModes.Next) {
                 Log.d("CreateScreen", "next button pressed... name: ${name}")
@@ -53,7 +41,7 @@ fun CreateScreen(frontPane: FrontPane) {
             }
 
             AutofillTextField(
-                search = Preset::searchByAlias, searchableToString = { preset -> preset?.name ?: "null" },
+                search = Preset::searchByAlias, searchableToString = { searchable -> searchable?.name ?: "null" },
                 text = name, onTextChange = { name = it }, selection = preset, onSelectionChange = { preset = it },
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
@@ -64,7 +52,16 @@ fun CreateScreen(frontPane: FrontPane) {
     fun detailsScreen() {
         // TODO headers and visuals and stuff
         Column() {
-            ItemDetailsFormField("")
+            ItemDetailsFormField("presetVal text")
+
+            frontPane.fab.setAction(mode = ButtonModes.Save) {
+                Log.d("CreateScreen", "save button pressed...")
+                if (/*TODO if fields are filled out correctly*/true) {
+                    /*TODO save to database*/
+                    Log.d("CreateScreen", "going home")
+                    goHome()
+                }
+            }
         }
     }
 
