@@ -1,9 +1,12 @@
 package com.example.groceriestracker.models
 
+import android.os.Parcelable
 import com.example.groceriestracker.math.ProcessedItemHistory
 import java.util.*
+import kotlinx.parcelize.Parcelize
 
-class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
+@Parcelize
+class ProcessedItem(private val item: Item, private val onSave: suspend (Item) -> Unit) : Parcelable {
     val databaseEntryUID = item.uid
     var name: String = item.name ?: ""
     val remainingAmount: Double?

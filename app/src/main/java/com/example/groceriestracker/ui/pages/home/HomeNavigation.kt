@@ -71,7 +71,7 @@ fun HomeNavGraph(
                 navController.navigate(HomeDestinations.CREATE_ROUTE)
             }
 
-            HomeScreen(allItems)
+            HomeScreen(frontPane=frontPane, processedItems =allItems)
         }
 
         composable(
@@ -85,7 +85,7 @@ fun HomeNavGraph(
 
             frontPane.fab.setAction(ButtonModes.Next) // TODO change to save icon on next screen
 
-            CreateScreen { onClick ->
+            CreateScreen() { onClick ->
                 frontPane.fab.setAction(onClick = onClick)
             }
         }

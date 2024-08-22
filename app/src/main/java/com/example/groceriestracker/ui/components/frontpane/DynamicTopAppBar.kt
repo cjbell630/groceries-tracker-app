@@ -29,7 +29,7 @@ class DynamicTopAppBar(
 ) : FrontPaneElement {
     override var isVisible: Boolean = defaultShow
     var headerText: String = ""
-    var showBackButton: Boolean = false
+    var showBackButton: Boolean = false 
     var showSettingsButton: Boolean = true
     var mode: TopBarModes = TopBarModes.Normal
 
