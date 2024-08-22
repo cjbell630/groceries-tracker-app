@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui.home.create
+package com.example.groceriestracker.ui.pages.home.create
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues

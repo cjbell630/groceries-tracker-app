@@ -15,7 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.groceriestracker.R
-import com.example.groceriestracker.ui.TopLevelDestinations
+import com.example.groceriestracker.ui.pages.TopLevelDestinations
 
 class DynamicBottomNavBar(var navBackStackEntry: NavBackStackEntry?, private val navController: NavController) :
     FrontPaneElement {

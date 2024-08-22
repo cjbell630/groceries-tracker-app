@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui.check
+package com.example.groceriestracker.ui.pages.check
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.EaseIn
@@ -24,8 +24,8 @@ fun CheckNavGraph(
     navGraphBuilder: NavGraphBuilder,
     route: String,
     allItems: List<ProcessedItem>,
-    frontPane: FrontPane,
 
+    frontPane: FrontPane,
 
     getUpcAssociation: (String) -> UpcAssociation?,
     addUpcAssociation: (UpcAssociation) -> Unit,

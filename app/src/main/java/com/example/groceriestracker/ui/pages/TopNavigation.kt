@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui
+package com.example.groceriestracker.ui.pages
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.EaseIn
@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
-import com.example.groceriestracker.ui.check.CheckNavGraph
+import com.example.groceriestracker.ui.pages.check.CheckNavGraph
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
-import com.example.groceriestracker.ui.home.HomeNavGraph
+import com.example.groceriestracker.ui.pages.home.HomeNavGraph
 
 object TopLevelDestinations {
     const val HOME_ROUTE = "home"

@@ -1,6 +1,5 @@
 package com.example.groceriestracker.models
 
-import com.example.groceriestracker.FriendlyIcon
 import com.example.groceriestracker.math.ProcessedItemHistory
 import java.util.*
 

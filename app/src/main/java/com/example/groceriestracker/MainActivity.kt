@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.compose.rememberNavController
-import com.example.groceriestracker.ui.TopNavHost
+import com.example.groceriestracker.ui.pages.TopNavHost
 import com.example.groceriestracker.ui.theme.GroceriesTrackerTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass

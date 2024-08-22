@@ -1,20 +1,17 @@
-package com.example.groceriestracker.ui.check
+package com.example.groceriestracker.ui.pages.check
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.groceriestracker.BarcodeScanner
-import com.example.groceriestracker.BarcodeScanner.Companion.BarcodeDialog
+import com.example.groceriestracker.ui.components.BarcodeScanner
+import com.example.groceriestracker.ui.components.BarcodeScanner.Companion.BarcodeDialog
 import com.example.groceriestracker.R
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem

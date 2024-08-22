@@ -1,4 +1,4 @@
-package com.example.groceriestracker
+package com.example.groceriestracker.ui.components
 
 import android.content.Context
 import android.util.Log
@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
-import com.example.groceriestracker.ui.components.AutofillTextField
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions

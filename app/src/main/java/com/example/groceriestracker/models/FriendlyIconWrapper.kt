@@ -1,7 +1,5 @@
-package com.example.groceriestracker
+package com.example.groceriestracker.models
 
-import android.graphics.drawable.Drawable
-import android.media.Image
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

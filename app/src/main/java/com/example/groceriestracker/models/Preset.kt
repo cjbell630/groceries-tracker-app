@@ -1,8 +1,6 @@
 package com.example.groceriestracker.models
 
 import androidx.compose.ui.graphics.Color
-import com.example.groceriestracker.FriendlyIcon
-import com.example.groceriestracker.FriendlyIconicsIcon
 import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
 
 class Preset(

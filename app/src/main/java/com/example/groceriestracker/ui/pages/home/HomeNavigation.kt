@@ -1,4 +1,4 @@
-package com.example.groceriestracker.ui.home
+package com.example.groceriestracker.ui.pages.home
 
 import android.util.Log
 import androidx.compose.animation.*
@@ -18,13 +18,11 @@ import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setAction
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setSearch
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setText
-import com.example.groceriestracker.ui.home.create.CreateScreen
+import com.example.groceriestracker.ui.pages.home.create.CreateScreen
 
 object HomeDestinations {
     const val LIST_ROUTE = "item_list"
     const val CREATE_ROUTE = "create"
-
-
 }
 
 fun HomeNavGraph(
@@ -86,6 +84,7 @@ fun HomeNavGraph(
             frontPane.bottomBar.hide()
 
             frontPane.fab.setAction(ButtonModes.Next) // TODO change to save icon on next screen
+
             CreateScreen { onClick ->
                 frontPane.fab.setAction(onClick = onClick)
             }
