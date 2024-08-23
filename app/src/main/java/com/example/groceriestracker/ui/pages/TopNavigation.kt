@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
+import com.example.groceriestracker.repository.SettingsRepository
 import com.example.groceriestracker.ui.pages.check.CheckNavGraph
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import com.example.groceriestracker.ui.pages.home.HomeNavGraph
@@ -26,6 +27,7 @@ object TopLevelDestinations {
 fun TopNavHost(
     navController: NavHostController = rememberNavController(),
     allItems: List<ProcessedItem>,
+    settingsRepo: SettingsRepository,
 
     frontPane: FrontPane,
 
@@ -65,6 +67,12 @@ fun TopNavHost(
             getUpcAssociation, addUpcAssociation, incrementItemQuantity, searchItems
         )
 
-        SettingsNavGraph(this@NavHost, navController, TopLevelDestinations.SETTINGS_ROUTE, frontPane)
+        SettingsNavGraph(
+            navGraphBuilder = this@NavHost,
+            navController = navController,
+            route = TopLevelDestinations.SETTINGS_ROUTE,
+            frontPane = frontPane,
+            settingsRepo = settingsRepo
+        )
     }
 }

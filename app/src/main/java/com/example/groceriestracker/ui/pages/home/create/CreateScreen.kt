@@ -74,6 +74,7 @@ fun CreateScreen(frontPane: FrontPane, goHome: () -> Unit) {
                 presetVal = preset?.name
             )
 
+            // TODO not working
             frontPane.fab.setAction(mode = ButtonModes.Save) {
                 Log.d("CreateScreen", "save button pressed...")
                 if (/*TODO if fields are filled out correctly*/true) {

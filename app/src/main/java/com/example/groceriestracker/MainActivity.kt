@@ -182,8 +182,14 @@ fun GroceriesTrackerApp(
                 Column(modifier = Modifier.padding(innerPadding).zIndex(0f)) {
                     Spacer(modifier = Modifier.height(64.dp + 8.dp /*TODO fix magic number - this is height of top app bar + 8.dp*/))
                     TopNavHost(
-                        navController, allItems, frontPane,
-                        ::getUpcAssociation, ::addUpcAssociation, ::incrementItemQuantity, ::searchItems
+                        navController = navController,
+                        allItems = allItems,
+                        frontPane = frontPane,
+                        settingsRepo = settingsRepo,
+                        getUpcAssociation = ::getUpcAssociation,
+                        addUpcAssociation = ::addUpcAssociation,
+                        incrementItemQuantity = ::incrementItemQuantity,
+                        searchItems = ::searchItems
                     )
                 }
             }

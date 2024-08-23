@@ -9,6 +9,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.groceriestracker.repository.SettingsRepository
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import com.example.groceriestracker.ui.components.frontpane.FrontPane.Companion.setText
 
@@ -21,6 +22,7 @@ fun SettingsNavGraph(
     navGraphBuilder: NavGraphBuilder,
     navController: NavHostController,
     route: String,
+    settingsRepo: SettingsRepository,
     //allItems: List<ProcessedItem>,
     frontPane: FrontPane
 ) {
@@ -59,7 +61,7 @@ fun SettingsNavGraph(
 
             frontPane.fab.hide()
 
-            SettingsHome()
+            SettingsHome(settingsRepo = settingsRepo)
         }
     }
 }
