@@ -12,9 +12,9 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun GroceriesTrackerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    useDynamic: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val useDynamic = false;
     val colorScheme =
         if (useDynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val context = LocalContext.current

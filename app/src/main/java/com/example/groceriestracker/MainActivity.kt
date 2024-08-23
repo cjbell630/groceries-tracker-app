@@ -1,5 +1,6 @@
 package com.example.groceriestracker
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,14 +19,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.models.ProcessedItem
+import com.example.groceriestracker.repository.SettingsRepository
+import com.example.groceriestracker.repository.SettingsRepository.Settings.UseDynamic
 import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
 import kotlinx.coroutines.launch
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -33,7 +41,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
-            GroceriesTrackerApp(widthSizeClass)
+            val settingsRepo = SettingsRepository(dataStore)
+            GroceriesTrackerApp(widthSizeClass, settingsRepo)
         }
     }
 }
@@ -62,11 +71,18 @@ private fun rememberSizeAwareDrawerState(isExpandedScreen: Boolean): DrawerState
 @Composable
 fun GroceriesTrackerApp(
     widthSizeClass: WindowWidthSizeClass,
+    settingsRepo: SettingsRepository
 ) {
-    GroceriesTrackerTheme {
+    val coroutineScope = rememberCoroutineScope()
+    val useDynamicTheme = remember { mutableStateOf(false) }
+    LaunchedEffect(coroutineScope) {
+        useDynamicTheme.value = with(settingsRepo) {
+            UseDynamic.getValue()
+        } ?: false
+    }
+    GroceriesTrackerTheme(useDynamic = useDynamicTheme.value) {
         val navController = rememberNavController()
         //TopNavHost(navController = navController)
-        val coroutineScope = rememberCoroutineScope()
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
         //val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
