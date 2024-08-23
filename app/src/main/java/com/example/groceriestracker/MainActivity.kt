@@ -22,6 +22,7 @@ import androidx.compose.ui.zIndex
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
 import com.example.groceriestracker.models.UpcAssociation
@@ -31,6 +32,7 @@ import com.example.groceriestracker.repository.SettingsRepository
 import com.example.groceriestracker.repository.SettingsRepository.Settings.UseDynamic
 import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -39,9 +41,9 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val settingsRepo = SettingsRepository(dataStore = dataStore, lifecycleScope = lifecycleScope)
         setContent {
             val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
-            val settingsRepo = SettingsRepository(dataStore)
             GroceriesTrackerApp(widthSizeClass, settingsRepo)
         }
     }
@@ -74,13 +76,13 @@ fun GroceriesTrackerApp(
     settingsRepo: SettingsRepository
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val useDynamicTheme = remember { mutableStateOf(false) }
+    var useDynamicTheme by remember { mutableStateOf(false) }
     LaunchedEffect(coroutineScope) {
-        useDynamicTheme.value = with(settingsRepo) {
+        useDynamicTheme = with(settingsRepo) {
             UseDynamic.getValue()
         } ?: false
     }
-    GroceriesTrackerTheme(useDynamic = useDynamicTheme.value) {
+    GroceriesTrackerTheme(useDynamic = useDynamicTheme) {
         val navController = rememberNavController()
         //TopNavHost(navController = navController)
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
