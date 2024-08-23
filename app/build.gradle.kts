@@ -72,6 +72,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     // compose
     val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
