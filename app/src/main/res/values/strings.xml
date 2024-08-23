@@ -10,4 +10,7 @@
     <string name="scan_bulk">Scan bulk</string>
     <string name="item_search_hint">Hinted search text</string>
     <string name="label_create_screen">Create</string>
+    <string name="settings_category_ui">UI</string>
+    <string name="settings_name_dynamic_theme">Use Dynamic Theme</string>
+    <string name="settings_desc_dynamic_theme">Use theme based on app wallpaper</string>
 </resources>
