@@ -1,6 +1,5 @@
 package com.example.groceriestracker.ui.pages.settings
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.LinearEasing
