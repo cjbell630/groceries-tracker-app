@@ -26,9 +26,9 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
     private var statusEvents: MutableList<ItemStatus> = item.statusEvents.toMutableList()
 
     val history: ProcessedItemHistory = ProcessedItemHistory(item.statusEvents)
-
+    /*
     var estimatedTimeRemaining: Long = calculateTimeRemaining()
-        private set // not modifiable from outside the class
+        private set // not modifiable from outside the class*/
 
 
     init {
@@ -50,10 +50,10 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
         // TODO refresh?
     }
 
+    /*
     private fun calculateTimeRemaining(): Long {
-        return remainingAmount?.toLong()!! // TODO placeholder
-        // TODO return estimateTimeRemaining(statusEvents)
-    }
+        return Date()
+    }*/
 
     fun setQuantity(newQuantity: Double) {
         statusEvents.add(ItemStatus(Date().time, newQuantity))
