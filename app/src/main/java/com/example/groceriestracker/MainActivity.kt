@@ -25,6 +25,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.groceriestracker.database.AppDatabase
+import com.example.groceriestracker.models.Item
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.repository.ItemRepository
 import com.example.groceriestracker.models.ProcessedItem
@@ -32,7 +33,6 @@ import com.example.groceriestracker.repository.SettingsRepository
 import com.example.groceriestracker.repository.SettingsRepository.Settings.UseDynamic
 import com.example.groceriestracker.repository.UpcAssociationRepository
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -49,27 +49,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/**
- * Determine the drawer state to pass to the modal drawer.
- * from https://github.com/android/compose-samples/blob/main/JetNews/app/src/main/java/com/example/jetnews/ui/JetnewsApp.kt#L39
- */
-@Composable
-private fun rememberSizeAwareDrawerState(isExpandedScreen: Boolean): DrawerState {
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-
-    return if (!isExpandedScreen) {
-        // If we want to allow showing the drawer, we use a real, remembered drawer
-        // state defined above
-        drawerState
-    } else {
-        // If we don't want to allow the drawer to be shown, we provide a drawer state
-        // that is locked closed. This is intentionally not remembered, because we
-        // don't want to keep track of any changes and always keep it closed
-        DrawerState(DrawerValue.Closed)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GroceriesTrackerApp(
     widthSizeClass: WindowWidthSizeClass,
@@ -84,18 +63,11 @@ fun GroceriesTrackerApp(
     }
     GroceriesTrackerTheme(useDynamic = useDynamicTheme) {
         val navController = rememberNavController()
-        //TopNavHost(navController = navController)
         val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
-        //val sizeAwareDrawerState = rememberSizeAwareDrawerState(isExpandedScreen)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
         /* App Bars and stuff */
         val frontPane = FrontPane(navBackStackEntry, navController)
-        /*
-        val bottomNavBar = BottomNavBar(navBackStackEntry, navController)
-        val topAppBar = TopAppBar(navigateUp = navController::navigateUp)
-        val floatingActionButton = DynamicFab() /*do nothing on click*/
-         */
 
         val appDatabase = AppDatabase.getDatabase(LocalContext.current)
 
@@ -121,7 +93,7 @@ fun GroceriesTrackerApp(
 
         fun getUpcAssociation(upc: String): UpcAssociation? {
             Log.d(
-                "MainActivity", "searching for upc ${upc} in list ${
+                "MainActivity", "searching for upc $upc in list ${
                     allUpcsList.joinToString { upcAssociation ->
                         upcAssociation.upc!!
                     }
@@ -167,7 +139,11 @@ fun GroceriesTrackerApp(
             }
         }*/
 
-
+        fun storeNewItem(item: Item) {
+            coroutineScope.launch {
+                itemRepository.insert(item)
+            }
+        }
 
         Scaffold(
             topBar = {
@@ -191,7 +167,8 @@ fun GroceriesTrackerApp(
                         getUpcAssociation = ::getUpcAssociation,
                         addUpcAssociation = ::addUpcAssociation,
                         incrementItemQuantity = ::incrementItemQuantity,
-                        searchItems = ::searchItems
+                        searchItems = ::searchItems,
+                        storeNewItem=::storeNewItem
                     )
                 }
             }

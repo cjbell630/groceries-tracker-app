@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.groceriestracker.R
+import com.example.groceriestracker.models.Item
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.ui.components.frontpane.DynamicFab.Companion.ButtonModes
 import com.example.groceriestracker.ui.components.frontpane.FrontPane
@@ -31,7 +32,8 @@ fun HomeNavGraph(
     navController: NavHostController,
     route: String,
     allItems: List<ProcessedItem>,
-    frontPane: FrontPane
+    frontPane: FrontPane,
+    storeNewItem: (Item)->Unit
 ) {
     fun baseNavEnterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition? {
         return {
@@ -86,7 +88,7 @@ fun HomeNavGraph(
 
             frontPane.fab.setAction(ButtonModes.Next)
 
-            CreateScreen(frontPane, goHome={navController.navigate(TopLevelDestinations.HOME_ROUTE)})
+            CreateScreen(frontPane, goHome={navController.navigate(TopLevelDestinations.HOME_ROUTE)}, storeNewItem=storeNewItem)
         }
     }
 }

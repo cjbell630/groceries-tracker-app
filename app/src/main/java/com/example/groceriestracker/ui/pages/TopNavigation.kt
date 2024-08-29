@@ -9,6 +9,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.groceriestracker.models.Item
 import com.example.groceriestracker.models.UpcAssociation
 import com.example.groceriestracker.models.ProcessedItem
 import com.example.groceriestracker.repository.SettingsRepository
@@ -34,7 +35,8 @@ fun TopNavHost(
     getUpcAssociation: (String) -> UpcAssociation?,
     addUpcAssociation: (UpcAssociation) -> Unit,
     incrementItemQuantity: (Int, Double) -> Unit,
-    searchItems: (String) -> List<ProcessedItem>
+    searchItems: (String) -> List<ProcessedItem>,
+    storeNewItem: (Item)->Unit
 ) {
     fun baseNavEnterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition? {
         return {
@@ -58,7 +60,8 @@ fun TopNavHost(
     NavHost(navController, startDestination = TopLevelDestinations.HOME_ROUTE) {
         HomeNavGraph(
             this@NavHost, navController, TopLevelDestinations.HOME_ROUTE, allItems,
-            frontPane
+            frontPane,
+            storeNewItem=storeNewItem
         )
 
         CheckNavGraph(
