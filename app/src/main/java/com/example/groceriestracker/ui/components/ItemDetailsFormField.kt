@@ -2,6 +2,7 @@ package com.example.groceriestracker.ui.components
 
 import android.os.Parcelable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Star
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -30,7 +32,8 @@ data class FieldState(val text: String = "", val isError: Boolean, val errorText
 fun ItemDetailsFormField(
     state: FieldState, onTextChange: (String) -> Unit,
     valueName: String,
-    presetVal: String?
+    presetVal: String?,
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
     Row {
         TextField(
@@ -54,7 +57,8 @@ fun ItemDetailsFormField(
                 if (state.isError && state.errorText != null) {
                     Text(state.errorText)
                 }
-            }
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType)
         )
     }
 

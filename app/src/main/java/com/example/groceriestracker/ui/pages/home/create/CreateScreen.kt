@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.groceriestracker.models.Item
 import com.example.groceriestracker.models.ItemStatus
@@ -27,20 +28,23 @@ enum class CreationState {
 }
 
 @Composable
-fun CreateScreen(frontPane: FrontPane, goHome: () -> Unit,
-                 storeNewItem: (Item)->Unit) {
+fun CreateScreen(
+    frontPane: FrontPane, goHome: () -> Unit,
+    storeNewItem: (Item) -> Unit
+) {
     var state by rememberSaveable { mutableStateOf(CreationState.NAME) }
     var preset: Preset? by remember { mutableStateOf(null) }
     var name by remember { mutableStateOf("") }
+    var amount by remember { mutableDoubleStateOf(0.0) }
 
-    fun createItem(): Item {
+    fun createItem(nameOverride: String?, amount: Double): Item {
         return Item(
             presetId = preset?.id,
-            name = name,
+            name = nameOverride,
             unit = null, //TODO
             iconId = null, //TODO
             needsUpdate = 0,
-            statusEvents = listOf(ItemStatus(Date().time, 0.0/*TODO*/))
+            statusEvents = listOf(ItemStatus(Date().time, amount))
         )
     }
 
@@ -77,24 +81,31 @@ fun CreateScreen(frontPane: FrontPane, goHome: () -> Unit,
             ItemDetailsFormField(
                 state = nameFieldState,
                 onTextChange = { nameFieldState = FieldState(it, it.isEmpty()) },
-                valueName = "value name",
+                valueName = "Item Name",
                 presetVal = preset?.name
             )
-            /*
-            var unitFieldState by remember { mutableStateOf(FieldState(preset?.name)) }
+
+            var amountFieldState by remember { mutableStateOf(FieldState("0.0")) }
             ItemDetailsFormField(
-                state = unitFieldState,
+                state = amountFieldState,
                 onTextChange = {
-                    unitFieldState = FieldState(
-                        it, errorText = if (it.contains("x")) null else "string must contain x"
+                    val doubleValue: Double? = it.toDoubleOrNull()
+                    amountFieldState = FieldState(
+                        it, errorText = if (doubleValue == null) "Must be a number!" else null
                     )
                 },
-                valueName = "value name",
-                presetVal = preset?.name
-            )*/
+                valueName = "Amount",
+                presetVal = null,
+                keyboardType = KeyboardType.Decimal
+            )
 
             Button(onClick = {
-                storeNewItem(createItem())
+                storeNewItem(
+                    createItem(
+                        nameOverride = if (nameFieldState.text == preset?.name) null else nameFieldState.text,
+                        amount = amount
+                    )
+                )
                 goHome()
             }) {
                 Text("Submit") // TODO placeholder bc fab isnt working
