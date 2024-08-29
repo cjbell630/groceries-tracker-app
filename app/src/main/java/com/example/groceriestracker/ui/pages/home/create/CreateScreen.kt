@@ -35,7 +35,6 @@ fun CreateScreen(
     var state by rememberSaveable { mutableStateOf(CreationState.NAME) }
     var preset: Preset? by remember { mutableStateOf(null) }
     var name by remember { mutableStateOf("") }
-    var amount by remember { mutableDoubleStateOf(0.0) }
 
     fun createItem(nameOverride: String?, amount: Double): Item {
         return Item(
@@ -103,7 +102,7 @@ fun CreateScreen(
                 storeNewItem(
                     createItem(
                         nameOverride = if (nameFieldState.text == preset?.name) null else nameFieldState.text,
-                        amount = amount
+                        amount = amountFieldState.text.toDouble()
                     )
                 )
                 goHome()
