@@ -54,14 +54,13 @@ fun ItemCard(item: ProcessedItem) {
                         // use elvis
                         ((Date().time - item.history.lastUpdate?.time!!) /
                                 (item.history.estimatedExpiryTime - item.history.lastUpdate?.time!!)
-                        ).toFloat()
+                                ).toFloat()
                     },
                     color = Color.Red,
                     trackColor = Color.Green,
                     modifier = Modifier.padding(end = 2 * THINGY)
                 )
-                Column(
-                ) {
+                Column() {
                     Text(item.remainingAmount.toString())
                     Text(item.unit)
                 }

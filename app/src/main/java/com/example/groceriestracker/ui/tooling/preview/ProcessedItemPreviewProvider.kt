@@ -11,7 +11,9 @@ class ProcessedItemPreviewProvider : PreviewParameterProvider<ProcessedItem> {
             Item(
                 name = "Milk",
                 unit = "Liters",
-                iconId = "grape",
+                presetId = "grape",
+                needsUpdate = 0,
+                iconId=null,
                 statusEvents = listOf(ItemStatus(1723166595, 2.0)) // Adjust as necessary
             ),
             onSave = { /* Do nothing */ }
@@ -20,7 +22,9 @@ class ProcessedItemPreviewProvider : PreviewParameterProvider<ProcessedItem> {
             Item(
                 name = "Bread",
                 unit = "Loaf",
-                iconId = "grape",
+                presetId = "grape",
+                needsUpdate = 0,
+                iconId=null,
                 statusEvents = listOf(ItemStatus(1723339395, 1.0)) // Adjust as necessary
             ),
             onSave = { /* Do nothing */ }

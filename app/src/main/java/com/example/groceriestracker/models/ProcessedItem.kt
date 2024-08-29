@@ -5,14 +5,24 @@ import java.util.*
 
 class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
     val databaseEntryUID = item.uid
-    var name: String = item.name ?: ""
+    val preset: Preset? = if (item.presetId == null) null else Preset.getById(item.presetId)
+
+    var name: String = item.name ?: preset?.name ?: ""
+
     val remainingAmount: Double?
         get() = history.lastUpdate?.amount
 
-    var unit: String = item.unit ?: name
+    var unit: String = item.unit ?: name // TODO make unit class
 
     // TODO kinda cool but is this worth   get() = if(remainingAmount == 1.0) field else "${field}s"
+
     var iconId: String? = item.iconId
+
+    //TODO error checking
+    var icon: FriendlyIcon? = if (iconId == null) preset?.icon else Preset.getById(iconId!!)?.icon
+
+    var needsUpdate: Boolean = item.needsUpdate == 1
+
     private var statusEvents: MutableList<ItemStatus> = item.statusEvents.toMutableList()
 
     val history: ProcessedItemHistory = ProcessedItemHistory(item.statusEvents)
@@ -20,17 +30,22 @@ class ProcessedItem(item: Item, private val onSave: suspend (Item) -> Unit) {
     var estimatedTimeRemaining: Long = calculateTimeRemaining()
         private set // not modifiable from outside the class
 
-    //TODO error checking
-    var icon: FriendlyIcon? = if (iconId != null) Preset.getById(iconId!!)?.icon else null
 
     init {
+
     }
 
     /**
      * Create a new item containing the current state of this object and save it to the database
      */
     suspend fun saveToDatabase() {
-        val newItem = Item(databaseEntryUID, name, unit, iconId, statusEvents.toList())
+        val newItem = Item(
+            uid = databaseEntryUID,
+            presetId = preset?.id,
+            name = name, unit = unit, iconId = iconId,
+            needsUpdate = if (needsUpdate) 1 else 0,
+            statusEvents.toList()
+        )
         onSave(newItem)
         // TODO refresh?
     }

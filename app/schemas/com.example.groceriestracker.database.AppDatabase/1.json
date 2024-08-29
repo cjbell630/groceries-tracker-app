@@ -2,17 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6bc4bb84e9f79a8e69abb7cfef301221",
+    "identityHash": "d05ab2ed937b3509664ed8f7183e9bbc",
     "entities": [
       {
         "tableName": "Item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `unit` TEXT, `icon_id` TEXT, `status_events` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `preset_id` TEXT, `name` TEXT, `unit` TEXT, `icon_id` TEXT, `needs_update` INTEGER NOT NULL, `status_events` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
             "columnName": "uid",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "presetId",
+            "columnName": "preset_id",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "name",
@@ -31,6 +37,12 @@
             "columnName": "icon_id",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "needsUpdate",
+            "columnName": "needs_update",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "statusEvents",
@@ -90,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6bc4bb84e9f79a8e69abb7cfef301221')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd05ab2ed937b3509664ed8f7183e9bbc')"
     ]
   }
 }

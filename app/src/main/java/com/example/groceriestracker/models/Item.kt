@@ -11,10 +11,11 @@ import com.example.groceriestracker.database.ItemStatusTypeConverter
 @Entity
 data class Item(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
+    @ColumnInfo(name = "preset_id") val presetId: String?,
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "unit") val unit: String?,
     @ColumnInfo(name = "icon_id") val iconId: String?,
-    // TODO add "needs update" boolean field
+    @ColumnInfo(name = "needs_update") val needsUpdate: Int, // TODO int bc boolean is only in API 29
     @ColumnInfo(name = "status_events") @TypeConverters(ItemStatusTypeConverter::class) val statusEvents: List<ItemStatus>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -22,14 +23,18 @@ data class Item(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
         parcel.createTypedArrayList(ItemStatus) ?: emptyList()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(uid)
+        parcel.writeString(presetId)
         parcel.writeString(name)
         parcel.writeString(unit)
         parcel.writeString(iconId)
+        parcel.writeInt(needsUpdate)
         parcel.writeTypedList(statusEvents)
     }
 
