@@ -14,7 +14,7 @@ fun HomeScreen(processedItems: List<ProcessedItem>) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         LazyColumn {
             items(processedItems.sortedBy { item ->
-                item.estimatedTimeRemaining // TODO does this work?
+                item.history.estimatedExpiryTime // TODO does this work?
             }) { processedItem: ProcessedItem ->
                 ItemCard(processedItem)
             }
